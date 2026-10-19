@@ -1480,6 +1480,83 @@
             box-shadow: 0 6px 16px rgba(37, 211, 102, 0.2);
         }
 
+        .sim-btn-sms { border-left: 4px solid #06b6d4 !important; }
+        .sim-btn-sms:hover { box-shadow: 0 10px 24px rgba(6, 182, 212, 0.4) !important; border-color: #06b6d4 !important; }
+
+        /* Smartphone SMS Spam Simulator UI */
+        .sms-phone-container {
+            background: #0f172a;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+        }
+        .sms-header {
+            background: #1e293b;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .sms-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            font-weight: bold;
+        }
+        .sms-body {
+            background-color: #0b1120;
+            background-image: radial-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 0);
+            background-size: 16px 16px;
+            padding: 20px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .sms-bubble {
+            background: #1e293b;
+            color: #f1f5f9;
+            padding: 12px 16px;
+            border-radius: 14px 14px 14px 2px;
+            max-width: 95%;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            font-size: 0.92rem;
+            line-height: 1.5;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.25s ease;
+        }
+        .sms-bubble.spam-detected {
+            border-left: 4px solid #ef4444 !important;
+            background: rgba(239, 68, 68, 0.12) !important;
+            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.25) !important;
+        }
+        .sms-sample-pill {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            background: rgba(6, 182, 212, 0.06);
+            color: #f1f5f9;
+            border-radius: 10px;
+            padding: 10px 14px;
+            text-align: left;
+            width: 100%;
+        }
+        .sms-sample-pill:hover, .sms-sample-pill.active {
+            background: rgba(6, 182, 212, 0.18) !important;
+            border-color: #06b6d4 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(6, 182, 212, 0.2);
+        }
+
         /* Dynamic 3D Card Hover Transformation */
         .liquid-glass-card {
             transform-style: preserve-3d;
@@ -1912,6 +1989,11 @@
                             <i class="fa-brands fa-whatsapp me-1 text-success"></i> WhatsApp Message Lab
                         </button>
                     </li>
+                    <li class="nav-item">
+                        <button class="nav-link rounded-pill px-3 py-1 font-mono small text-white" id="tab-sms-btn" data-bs-toggle="pill" data-bs-target="#tab-sms" type="button">
+                            <i class="fa-solid fa-comment-sms me-1 text-info"></i> SMS Spam Lab
+                        </button>
+                    </li>
                 </ul>
             </div>
 
@@ -2028,6 +2110,42 @@
                                     </div>
                                 </div>
                                 <span class="badge bg-danger-subtle text-danger font-mono" style="font-size: 0.7rem;">95% Score</span>
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="sim-btn threat-sim sim-btn-sms d-flex justify-content-between align-items-center" onclick="runSimulation('sms_loan_spam')">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="fa-solid fa-comment-dollar fs-4 text-info"></i>
+                                    <div>
+                                        <div class="fw-bold small text-white">SMS ₹5L Loan Pre-Approval</div>
+                                        <div class="text-danger small fw-semibold" style="font-size: 0.74rem;">🚨 Instant Cash Scam</div>
+                                    </div>
+                                </div>
+                                <span class="badge bg-danger-subtle text-danger font-mono" style="font-size: 0.7rem;">96% Score</span>
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="sim-btn threat-sim sim-btn-sms d-flex justify-content-between align-items-center" onclick="runSimulation('sms_parcel_smishing')">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="fa-solid fa-box-open fs-4 text-warning"></i>
+                                    <div>
+                                        <div class="fw-bold small text-white">SMS India Post Smishing</div>
+                                        <div class="text-danger small fw-semibold" style="font-size: 0.74rem;">🚨 Delivery Phishing</div>
+                                    </div>
+                                </div>
+                                <span class="badge bg-danger-subtle text-danger font-mono" style="font-size: 0.7rem;">98% Score</span>
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="sim-btn threat-sim sim-btn-sms d-flex justify-content-between align-items-center" onclick="runSimulation('sms_kyc_spam')">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="fa-solid fa-id-card fs-4 text-danger"></i>
+                                    <div>
+                                        <div class="fw-bold small text-white">SMS Bank KYC Account Freeze</div>
+                                        <div class="text-danger small fw-semibold" style="font-size: 0.74rem;">🚨 Credential Harvest</div>
+                                    </div>
+                                </div>
+                                <span class="badge bg-danger-subtle text-danger font-mono" style="font-size: 0.7rem;">99% Score</span>
                             </button>
                         </div>
                     </div>
@@ -2179,6 +2297,129 @@
 
                             <!-- Live Analysis Output Container -->
                             <div id="waScanResultBox" class="mt-3 p-3 rounded-3 d-none"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 5: SMS & Message Spam Lab -->
+                <div class="tab-pane fade" id="tab-sms" role="tabpanel">
+                    <div class="row g-3">
+                        <!-- Left Column: Preloaded SMS Spam Scenarios -->
+                        <div class="col-lg-5">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="fw-bold text-white small">
+                                    <i class="fa-solid fa-comment-sms text-info me-1"></i> SMS Spam & Fraud Samples
+                                </span>
+                                <span class="badge bg-info-subtle text-info font-mono" style="font-size: 0.7rem;">Click to Load</span>
+                            </div>
+                            <p class="small text-sub-high mb-3">
+                                Test common SMS scams, instant loan spam, smishing, and fake package alerts with our AI Spam Detector:
+                            </p>
+                            <div class="d-flex flex-column gap-2" id="smsSamplesList">
+                                <button type="button" class="sms-sample-pill active" onclick="loadSmsSample('sms_loan')">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="fw-bold small text-white"><i class="fa-solid fa-hand-holding-dollar text-info me-1"></i> Pre-Approved ₹5L Loan</span>
+                                        <span class="badge bg-danger-subtle text-danger font-mono" style="font-size: 0.68rem;">96% Spam</span>
+                                    </div>
+                                    <div class="text-sub-high small" style="font-size: 0.78rem;">"₹5,00,000 pre-approved loan credited! Zero CIBIL..."</div>
+                                </button>
+                                <button type="button" class="sms-sample-pill" onclick="loadSmsSample('sms_parcel')">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="fw-bold small text-white"><i class="fa-solid fa-truck-fast text-warning me-1"></i> India Post Smishing</span>
+                                        <span class="badge bg-danger-subtle text-danger font-mono" style="font-size: 0.68rem;">98% Smishing</span>
+                                    </div>
+                                    <div class="text-sub-high small" style="font-size: 0.78rem;">"[India Post Alert] Your courier package is on hold..."</div>
+                                </button>
+                                <button type="button" class="sms-sample-pill" onclick="loadSmsSample('sms_betting')">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="fw-bold small text-white"><i class="fa-solid fa-dice text-danger me-1"></i> Color Trading & APK Spam</span>
+                                        <span class="badge bg-danger-subtle text-danger font-mono" style="font-size: 0.68rem;">94% Spam</span>
+                                    </div>
+                                    <div class="text-sub-high small" style="font-size: 0.78rem;">"Deposit ₹100 get ₹2,500 bonus! Earn daily ₹5,000..."</div>
+                                </button>
+                                <button type="button" class="sms-sample-pill" onclick="loadSmsSample('sms_cashback')">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="fw-bold small text-white"><i class="fa-solid fa-gift text-warning me-1"></i> PhonePe/GPay ₹3,499 Reward</span>
+                                        <span class="badge bg-danger-subtle text-danger font-mono" style="font-size: 0.68rem;">95% Fraud</span>
+                                    </div>
+                                    <div class="text-sub-high small" style="font-size: 0.78rem;">"Congratulations! You received ₹3,499 cashback reward..."</div>
+                                </button>
+                                <button type="button" class="sms-sample-pill" onclick="loadSmsSample('sms_kyc')">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="fw-bold small text-white"><i class="fa-solid fa-triangle-exclamation text-danger me-1"></i> Bank Account KYC Suspension</span>
+                                        <span class="badge bg-danger-subtle text-danger font-mono" style="font-size: 0.68rem;">99% Critical</span>
+                                    </div>
+                                    <div class="text-sub-high small" style="font-size: 0.78rem;">"Dear SBI User, your YONO account has been suspended..."</div>
+                                </button>
+                                <button type="button" class="sms-sample-pill" onclick="loadSmsSample('sms_ham')">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="fw-bold small text-white"><i class="fa-solid fa-shield-halved text-success me-1"></i> Real Bank Debit Alert</span>
+                                        <span class="badge bg-success-subtle text-success font-mono" style="font-size: 0.68rem;">Clean Ham</span>
+                                    </div>
+                                    <div class="text-sub-high small" style="font-size: 0.78rem;">"Rs 1,250.00 debited from A/c **4102 on 19-OCT-26..."</div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Interactive Smartphone SMS Preview & AI Live Scan -->
+                        <div class="col-lg-7">
+                            <div class="sms-phone-container mb-3">
+                                <div class="sms-header">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="sms-avatar" id="smsPreviewAvatar">
+                                            <i class="fa-solid fa-comment"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold text-white small" id="smsPreviewSender">VK-QUICKLN</div>
+                                            <div class="text-sub-high small font-mono" style="font-size: 0.72rem;" id="smsPreviewPhone">+91 91234 56780</div>
+                                        </div>
+                                    </div>
+                                    <span class="badge bg-danger-subtle text-danger font-mono small" id="smsThreatBadge">
+                                        <i class="fa-solid fa-ban me-1"></i> Detected Spam
+                                    </span>
+                                </div>
+                                <div class="sms-body">
+                                    <div class="sms-bubble spam-detected" id="smsBubbleElement">
+                                        <div id="smsBubbleText">
+                                            Dear Customer, Congratulations! ₹5,00,000 pre-approved personal loan credited to your account! Zero CIBIL required. Disbursal in 5 minutes with 0% interest for 3 months. Click to claim cash now: <span class="text-warning text-decoration-underline">http://bit.ly/instant-loan-cash</span>
+                                        </div>
+                                        <div class="wa-time mt-2">
+                                            <span id="smsTimeDisplay">Just now</span>
+                                            <i class="fa-solid fa-shield-virus text-danger ms-1"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Custom SMS Input -->
+                            <div class="mb-3">
+                                <div class="row g-2 mb-2">
+                                    <div class="col-md-5">
+                                        <label class="form-label text-white small fw-bold">SMS Sender Tag / Number</label>
+                                        <input type="text" id="smsCustomSender" class="form-control font-mono small" placeholder="e.g. VK-LOANSP or +91-9876543210" value="VK-QUICKLN">
+                                    </div>
+                                    <div class="col-md-7">
+                                        <label class="form-label text-white small fw-bold d-flex justify-content-between align-items-center">
+                                            <span>Or Test Any Custom SMS / Message:</span>
+                                            <span class="text-sub-high" style="font-size: 0.74rem;">Paste from your inbox</span>
+                                        </label>
+                                        <span class="text-sub-high small font-mono">Type or paste below to scan</span>
+                                    </div>
+                                </div>
+                                <textarea id="smsCustomMessageInput" class="form-control font-mono small" rows="3" placeholder="Paste incoming SMS text here to test with BERT AI Spam Classifier..."></textarea>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button type="button" class="btn btn-info flex-grow-1 text-white fw-bold" id="btnScanSmsSpam" onclick="executeSmsAnalysis()">
+                                    <i class="fa-solid fa-robot me-2"></i> Scan Message for Spam with AI
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="clearSmsInput()" title="Clear">
+                                    <i class="fa-solid fa-rotate-left"></i>
+                                </button>
+                            </div>
+
+                            <!-- Live Analysis Output Container -->
+                            <div id="smsScanResultBox" class="mt-3 p-3 rounded-3 d-none"></div>
                         </div>
                     </div>
                 </div>
@@ -3494,6 +3735,207 @@
                 resBox.innerText = 'Network error: ' + err.message;
             } finally {
                 btn.innerHTML = '<i class="fa-brands fa-whatsapp me-2"></i> Scan WhatsApp Message with AI';
+                btn.disabled = false;
+            }
+        }
+
+        /* =========================================================
+           SMS & MESSAGE SPAM LAB & CLASSIFIER
+           ========================================================= */
+        const smsSampleData = {
+            "sms_loan": {
+                sender: "VK-QUICKLN",
+                phone: "+91 91234 56780",
+                time: "Just now",
+                threat: true,
+                message: "Dear Customer, Congratulations! ₹5,00,000 pre-approved personal loan credited to your account! Zero CIBIL required. Disbursal in 5 minutes with 0% interest for 3 months. Click to claim cash now: http://bit.ly/instant-loan-cash"
+            },
+            "sms_parcel": {
+                sender: "AX-INPOST",
+                phone: "+91 99887 11223",
+                time: "12:20 PM",
+                threat: true,
+                message: "[India Post Alert] Your courier package (Item ID: IN-98214) is on hold at sorting hub due to incorrect street address. Please update your delivery address within 12 hours to avoid parcel return: http://indiapost-update-address.com/track"
+            },
+            "sms_betting": {
+                sender: "+91 98760 12345",
+                phone: "+91 98760 12345",
+                time: "10:15 AM",
+                threat: true,
+                message: "Deposit ₹100 and get ₹2,500 welcome bonus! Earn daily ₹5,000 playing Color Trading on fast withdrawal app. Instant UPI payout. Download official APK: http://colortrading-win.tk/app.apk"
+            },
+            "sms_cashback": {
+                sender: "DZ-REWARD",
+                phone: "+91 88770 99881",
+                time: "Yesterday",
+                threat: true,
+                message: "Congratulations! You have received ₹3,499 cashback reward from PhonePe/GooglePay. Offer expires in 2 hours. Click here to scratch card and claim direct to bank: http://reward-cashback-claim.ml"
+            },
+            "sms_kyc": {
+                sender: "VK-SBIINB",
+                phone: "+91 77665 44332",
+                time: "Yesterday",
+                threat: true,
+                message: "Dear SBI User, your YONO mobile banking and debit card have been suspended today due to pending KYC verification. Update your Aadhaar card and PAN number immediately at http://sbi-yono-kyc-auth.com to restore access."
+            },
+            "sms_ham": {
+                sender: "VM-HDFCBK",
+                phone: "HDFC Bank Alert",
+                time: "2 days ago",
+                threat: false,
+                message: "Rs 1,250.00 debited from A/c **4102 on 19-OCT-26 at SWIGGY BANGALORE. UPI Ref 429104829104. If not done by you, call 18002583838 or SMS BLOCK to 5676712."
+            }
+        };
+
+        let currentSmsSampleId = "sms_loan";
+
+        function loadSmsSample(sampleId) {
+            currentSmsSampleId = sampleId;
+            const sample = smsSampleData[sampleId];
+            if (!sample) return;
+
+            document.querySelectorAll('.sms-sample-pill').forEach(pill => pill.classList.remove('active'));
+            if (window.event && window.event.currentTarget) {
+                window.event.currentTarget.classList.add('active');
+            }
+
+            document.getElementById('smsPreviewSender').innerText = sample.sender;
+            document.getElementById('smsPreviewPhone').innerText = sample.phone;
+            document.getElementById('smsTimeDisplay').innerText = sample.time;
+            document.getElementById('smsCustomSender').value = sample.sender;
+
+            const formatted = sample.message.replace(/(http[s]?:\/\/[^\s]+)/g, '<span class="text-warning text-decoration-underline">$1</span>');
+            document.getElementById('smsBubbleText').innerHTML = formatted;
+
+            const bubble = document.getElementById('smsBubbleElement');
+            const badge = document.getElementById('smsThreatBadge');
+            if (sample.threat) {
+                bubble.classList.add('spam-detected');
+                badge.className = 'badge bg-danger-subtle text-danger font-mono small';
+                badge.innerHTML = '<i class="fa-solid fa-ban me-1"></i> Detected Spam';
+            } else {
+                bubble.classList.remove('spam-detected');
+                badge.className = 'badge bg-success-subtle text-success font-mono small';
+                badge.innerHTML = '<i class="fa-solid fa-circle-check me-1"></i> Clean Ham';
+            }
+
+            document.getElementById('smsCustomMessageInput').value = sample.message;
+            document.getElementById('smsScanResultBox').classList.add('d-none');
+        }
+
+        function clearSmsInput() {
+            document.getElementById('smsCustomMessageInput').value = '';
+            document.getElementById('smsCustomSender').value = 'SMS-SENDER';
+            document.getElementById('smsBubbleText').innerText = 'Type or paste an SMS message below to preview...';
+            document.getElementById('smsScanResultBox').classList.add('d-none');
+            document.getElementById('smsBubbleElement').classList.remove('spam-detected');
+            document.querySelectorAll('.sms-sample-pill').forEach(pill => pill.classList.remove('active'));
+        }
+
+        const customSmsInput = document.getElementById('smsCustomMessageInput');
+        if (customSmsInput) {
+            customSmsInput.addEventListener('input', (e) => {
+                const val = e.target.value.trim();
+                if (val) {
+                    const formatted = val.replace(/(http[s]?:\/\/[^\s]+)/g, '<span class="text-warning text-decoration-underline">$1</span>');
+                    document.getElementById('smsBubbleText').innerHTML = formatted;
+                } else {
+                    document.getElementById('smsBubbleText').innerText = 'Type or paste an SMS message below to preview...';
+                }
+            });
+        }
+
+        const customSmsSender = document.getElementById('smsCustomSender');
+        if (customSmsSender) {
+            customSmsSender.addEventListener('input', (e) => {
+                const val = e.target.value.trim() || 'SMS-SENDER';
+                document.getElementById('smsPreviewSender').innerText = val;
+            });
+        }
+
+        async function executeSmsAnalysis() {
+            const btn = document.getElementById('btnScanSmsSpam');
+            const resBox = document.getElementById('smsScanResultBox');
+            const customText = document.getElementById('smsCustomMessageInput').value.trim();
+            const customSender = (document.getElementById('smsCustomSender').value || '').trim();
+
+            let activeSample = smsSampleData[currentSmsSampleId] || smsSampleData["sms_loan"];
+            let messageText = customText || activeSample.message;
+            let sender = customSender || activeSample.sender;
+
+            if (!messageText) {
+                alert("Please select a sample or paste an SMS message to analyze for spam.");
+                return;
+            }
+
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i> Analyzing Message with AI Spam Classifier...';
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('/api/sms-spam/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: messageText,
+                        sender: sender
+                    })
+                });
+                const data = await res.json();
+                resBox.classList.remove('d-none');
+
+                if (data.success) {
+                    const bubble = document.getElementById('smsBubbleElement');
+                    const badge = document.getElementById('smsThreatBadge');
+                    const a = data.analysis;
+
+                    if (a.is_spam) {
+                        playThreatAlarm();
+                        bubble.classList.add('spam-detected');
+                        badge.className = 'badge bg-danger text-white font-mono small';
+                        badge.innerHTML = `🚨 SPAM (${a.spam_score}%)`;
+
+                        resBox.className = 'mt-3 p-3 rounded-4 alert alert-danger border-danger';
+                        resBox.innerHTML = `
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-danger fs-6 px-3 py-1 rounded-pill">${a.verdict_label}</span>
+                                <span class="fw-bold font-mono fs-5 text-danger">Spam Score: ${a.spam_score}%</span>
+                            </div>
+                            <div class="small mb-1"><strong>Sender:</strong> ${data.record.sender}</div>
+                            ${a.detected_keywords && a.detected_keywords.length > 0 ? `<div class="small mb-2"><strong>Spam Triggers Detected:</strong> <span class="badge bg-danger-subtle text-danger font-mono">${a.detected_keywords.join('</span> <span class="badge bg-danger-subtle text-danger font-mono">')}</span></div>` : ''}
+                            <ul class="mb-0 small ps-3">
+                                ${(a.recommendations || []).map(r => `<li class="fw-medium">${r}</li>`).join('')}
+                            </ul>
+                        `;
+                        showToast(`🚨 SMS Spam Intercepted: ${a.spam_score}%`, `From ${sender}: Logged to security audit!`, true, data.record.id);
+                    } else {
+                        playSafeChime();
+                        bubble.classList.remove('spam-detected');
+                        badge.className = 'badge bg-success text-white font-mono small';
+                        badge.innerHTML = `🛡️ CLEAN HAM (0%)`;
+
+                        resBox.className = 'mt-3 p-3 rounded-4 alert alert-success border-success';
+                        resBox.innerHTML = `
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-success fs-6 px-3 py-1 rounded-pill">🛡️ VERIFIED CLEAN MESSAGE (HAM)</span>
+                                <span class="fw-bold font-mono fs-5 text-success">Spam Score: ${a.spam_score}%</span>
+                            </div>
+                            <p class="mb-0 small mt-2 fw-medium">Legitimate conversational or transactional SMS. No malicious patterns or financial smishing detected.</p>
+                        `;
+                        showToast('🛡️ Verified Safe SMS Message', `From ${sender}: Clean message confirmed.`, false, data.record.id);
+                    }
+
+                    prependRowToTable(data.record);
+                    updateCounters(a.is_spam);
+                } else {
+                    resBox.className = 'mt-3 p-3 rounded-4 alert alert-danger';
+                    resBox.innerText = 'Spam Analysis error: ' + (data.error || 'Unknown error');
+                }
+            } catch (err) {
+                resBox.classList.remove('d-none');
+                resBox.className = 'mt-3 p-3 rounded-4 alert alert-danger';
+                resBox.innerText = 'Network error: ' + err.message;
+            } finally {
+                btn.innerHTML = '<i class="fa-solid fa-robot me-2"></i> Scan Message for Spam with AI';
                 btn.disabled = false;
             }
         }

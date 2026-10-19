@@ -413,6 +413,21 @@ def simulate_email_api():
             "sender": "[Electricity Board Alert] +91 88776 65544",
             "subject": "⚠️ Urgent: Electricity Power Disconnection Notice",
             "body": "Dear Consumer, Your electricity power will be disconnected tonight at 9:30 PM from the power sub-station because your previous month bill was not updated. Please immediately contact our electricity officer Mr. Sharma at 8877665544 or pay pending bill online via: http://ebill-update-gov.in/pay. Urgent action required!"
+        },
+        "sms_loan_spam": {
+            "sender": "[SMS/Spam] VK-QUICKLN (+91 91234 56780)",
+            "subject": "🚨 Instant Pre-Approved Personal Loan of ₹5,00,000",
+            "body": "Dear Customer, Congratulations! ₹5,00,000 pre-approved personal loan credited to your account! Zero CIBIL required. Disbursal in 5 minutes with 0% interest for 3 months. Click to claim cash now: http://bit.ly/instant-loan-cash"
+        },
+        "sms_parcel_smishing": {
+            "sender": "[SMS/Smishing] AX-INPOST (+91 99887 11223)",
+            "subject": "⚠️ India Post Package on Hold: Action Required",
+            "body": "[India Post Alert] Your courier package (Item ID: IN-98214) is on hold at sorting hub due to incorrect street address. Please update your delivery address within 12 hours to avoid parcel return: http://indiapost-update-address.com/track"
+        },
+        "sms_kyc_spam": {
+            "sender": "[SMS/Smishing] VK-SBIINB (+91 77665 44332)",
+            "subject": "🚨 Bank Account KYC Suspension Notice",
+            "body": "Dear SBI User, your YONO mobile banking and debit card have been suspended today due to pending KYC verification. Update your Aadhaar card and PAN number immediately at http://sbi-yono-kyc-auth.com to restore access."
         }
     }
 
@@ -558,6 +573,217 @@ def analyze_whatsapp_message():
         "analysis": analysis,
         "phone": phone,
         "sender_name": sender_name
+    })
+
+# =========================================================
+# SMS & Message Spam Classifier Engine & Endpoints
+# =========================================================
+def analyze_sms_spam(sender, message):
+    spam_indicators = {
+        "financial_loan": [
+            "pre-approved", "instant loan", "zero interest", "no cibil", "apply loan",
+            "credit limit", "disbursed", "congratulations loan", "instant cash"
+        ],
+        "reward_cashback": [
+            "cashback", "credited to wallet", "claim reward", "won lottery", "free gift",
+            "scratch card", "lucky draw", "free recharge", "bonus 500"
+        ],
+        "smishing_urgency": [
+            "kyc blocked", "pan update", "account suspended", "sim blocked",
+            "electricity disconnected", "power cutoff", "action required",
+            "deactivated today", "update pan card", "yono account"
+        ],
+        "delivery_impersonation": [
+            "package on hold", "delivery failed", "update address", "customs fee",
+            "india post", "courier pending", "wrong house number"
+        ],
+        "gambling_betting": [
+            "betting app", "color trading", "rummy bonus", "casino bonus",
+            "earn daily", "apk download", "win 50000"
+        ]
+    }
+
+    text_lower = message.lower()
+    detected_categories = []
+    detected_keywords = []
+
+    for cat_name, kw_list in spam_indicators.items():
+        found = [kw for kw in kw_list if kw in text_lower]
+        if found:
+            detected_categories.append(cat_name)
+            detected_keywords.extend(found)
+
+    urls = extract_urls(message)
+    url_details = [analyze_url(u) for u in urls]
+    has_malicious_url = any(u.get("is_malicious", False) for u in url_details)
+    has_shortener = any("URL shortener detected" in u.get("issues", []) for u in url_details)
+
+    bert_res = analyze_email_text(message)
+    bert_score = float(bert_res["phishing_probability"])
+
+    spam_score = bert_score * 0.45
+    if detected_keywords:
+        spam_score += min(35.0, len(detected_keywords) * 12.0)
+    if urls:
+        spam_score += 15.0
+    if has_malicious_url or has_shortener:
+        spam_score += 25.0
+
+    is_mobile_number = bool(re.search(r'\+?\d{10,12}', sender.replace(" ", "").replace("-", "")))
+    if is_mobile_number and ("bank" in text_lower or "kyc" in text_lower or "loan" in text_lower or "electricity" in text_lower or "post" in text_lower):
+        spam_score += 20.0
+        detected_keywords.append("Personal mobile number spoofing official organization")
+
+    spam_score = min(100.0, max(0.0, round(spam_score, 1)))
+
+    if spam_score >= 75:
+        verdict = "SPAM_FRAUD"
+        verdict_label = "🚨 CRITICAL SPAM / FRAUD"
+        badge_color = "danger"
+    elif spam_score >= 50:
+        verdict = "SUSPICIOUS_SPAM"
+        verdict_label = "⚠️ SUSPICIOUS SMISHING"
+        badge_color = "warning"
+    elif spam_score >= 25:
+        verdict = "PROMOTIONAL"
+        verdict_label = "📢 PROMOTIONAL / LOW RISK"
+        badge_color = "info"
+    else:
+        verdict = "HAM_CLEAN"
+        verdict_label = "🛡️ VERIFIED CLEAN (HAM)"
+        badge_color = "success"
+
+    recommendations = []
+    if verdict in ("SPAM_FRAUD", "SUSPICIOUS_SPAM"):
+        if urls:
+            recommendations.append("DO NOT click any shortened links or download untrusted APKs.")
+        if "financial_loan" in detected_categories or "reward_cashback" in detected_categories:
+            recommendations.append("Genuine lenders never disburse loans without KYC documents and CIBIL checks.")
+        if "smishing_urgency" in detected_categories:
+            recommendations.append("Banks never notify account freeze via SMS requesting third-party site verification.")
+        recommendations.append("Block this number immediately and report to Cyber Crime / 1909 DND.")
+    else:
+        recommendations.append("Message content conforms to standard transactional or conversational SMS.")
+
+    return {
+        "spam_score": spam_score,
+        "is_spam": spam_score >= 50,
+        "verdict": verdict,
+        "verdict_label": verdict_label,
+        "badge_color": badge_color,
+        "categories": detected_categories,
+        "detected_keywords": list(set(detected_keywords)),
+        "urls_found": len(urls),
+        "url_details": url_details,
+        "recommendations": recommendations,
+        "bert_confidence": bert_res["confidence"]
+    }
+
+@app.route('/api/sms-spam/samples', methods=['GET'])
+def get_sms_spam_samples():
+    samples = [
+        {
+            "id": "sms_loan",
+            "title": "Instant Personal Loan of ₹5,00,000",
+            "sender": "VK-QUICKLN",
+            "phone": "+91 91234 56780",
+            "time": "Just now",
+            "category": "Pre-Approved Loan Spam",
+            "threat_type": "danger",
+            "score": "96%",
+            "message": "Dear Customer, Congratulations! ₹5,00,000 pre-approved personal loan credited to your account! Zero CIBIL required. Disbursal in 5 minutes with 0% interest for 3 months. Click to claim cash now: http://bit.ly/instant-loan-cash"
+        },
+        {
+            "id": "sms_parcel",
+            "title": "India Post Parcel On Hold Smishing",
+            "sender": "AX-INPOST",
+            "phone": "+91 99887 11223",
+            "time": "12:20 PM",
+            "category": "Delivery Impersonation Smishing",
+            "threat_type": "danger",
+            "score": "98%",
+            "message": "[India Post Alert] Your courier package (Item ID: IN-98214) is on hold at sorting hub due to incorrect street address. Please update your delivery address within 12 hours to avoid parcel return: http://indiapost-update-address.com/track"
+        },
+        {
+            "id": "sms_betting",
+            "title": "Color Trading & Gambling APK Spam",
+            "sender": "+91 98760 12345",
+            "phone": "+91 98760 12345",
+            "time": "10:15 AM",
+            "category": "Gambling / Malicious APK Spam",
+            "threat_type": "danger",
+            "score": "94%",
+            "message": "Deposit ₹100 and get ₹2,500 welcome bonus! Earn daily ₹5,000 playing Color Trading on fast withdrawal app. Instant UPI payout. Download official APK: http://colortrading-win.tk/app.apk"
+        },
+        {
+            "id": "sms_cashback",
+            "title": "Fake GPay / PhonePe ₹3,499 Reward",
+            "sender": "DZ-REWARD",
+            "phone": "+91 88770 99881",
+            "time": "Yesterday",
+            "category": "Cashback Fraud",
+            "threat_type": "danger",
+            "score": "95%",
+            "message": "Congratulations! You have received ₹3,499 cashback reward from PhonePe/GooglePay. Offer expires in 2 hours. Click here to scratch card and claim direct to bank: http://reward-cashback-claim.ml"
+        },
+        {
+            "id": "sms_kyc",
+            "title": "Bank Account Suspension & PAN Smishing",
+            "sender": "VK-SBIINB",
+            "phone": "+91 77665 44332",
+            "time": "Yesterday",
+            "category": "Bank Smishing / Credential Theft",
+            "threat_type": "danger",
+            "score": "99%",
+            "message": "Dear SBI User, your YONO mobile banking and debit card have been suspended today due to pending KYC verification. Update your Aadhaar card and PAN number immediately at http://sbi-yono-kyc-auth.com to restore access."
+        },
+        {
+            "id": "sms_ham",
+            "title": "Real Bank Transaction Alert (Clean Ham)",
+            "sender": "VM-HDFCBK",
+            "phone": "HDFC Bank Alert",
+            "time": "2 days ago",
+            "category": "Verified Bank Transaction",
+            "threat_type": "success",
+            "score": "Clean 0%",
+            "message": "Rs 1,250.00 debited from A/c **4102 on 19-OCT-26 at SWIGGY BANGALORE. UPI Ref 429104829104. If not done by you, call 18002583838 or SMS BLOCK to 5676712."
+        }
+    ]
+    return jsonify(samples)
+
+@app.route('/api/sms-spam/analyze', methods=['POST'])
+def analyze_sms_spam_api():
+    data = request.get_json() or {}
+    message = data.get("message", "").strip()
+    sender = data.get("sender", "SMS Sender").strip()
+
+    if not message:
+        return jsonify({"success": False, "error": "Message content is required"}), 400
+
+    analysis = analyze_sms_spam(sender, message)
+
+    subject = f"SMS: {message[:50]}..."
+    sender_display = f"[SMS/Spam] {sender}"
+
+    if analysis["is_spam"]:
+        trigger_desktop_alert(sender_display, subject, analysis["spam_score"])
+
+    scan_rec = ScanRecord(
+        sender=sender_display,
+        subject=subject,
+        is_phishing=analysis["is_spam"],
+        threat_score=analysis["spam_score"],
+        recommendations="\n".join(analysis["recommendations"])
+    )
+    db.session.add(scan_rec)
+    db.session.commit()
+
+    return jsonify({
+        "success": True,
+        "message": f"{analysis['verdict_label']} ({analysis['spam_score']}%)",
+        "record": scan_rec.to_dict(),
+        "analysis": analysis,
+        "sender": sender
     })
 
 @app.route('/api/latest-threat')
