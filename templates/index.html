@@ -1393,6 +1393,93 @@
         .sim-btn-zoom { border-left: 4px solid #38bdf8 !important; }
         .sim-btn-zoom:hover { box-shadow: 0 10px 24px rgba(56, 189, 248, 0.35) !important; border-color: #38bdf8 !important; }
 
+        .sim-btn-whatsapp { border-left: 4px solid #25d366 !important; }
+        .sim-btn-whatsapp:hover { box-shadow: 0 10px 24px rgba(37, 211, 102, 0.4) !important; border-color: #25d366 !important; }
+
+        /* WhatsApp Chat Simulator UI */
+        .wa-chat-container {
+            background: #0b141a;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(37, 211, 102, 0.25);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+        }
+        .wa-header {
+            background: #1f2c34;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .wa-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #25d366;
+            color: #0b141a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+        .wa-body {
+            background-color: #0b141a;
+            background-image: radial-gradient(rgba(37, 211, 102, 0.05) 1px, transparent 0);
+            background-size: 16px 16px;
+            padding: 20px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .wa-bubble {
+            background: #202c33;
+            color: #e9edef;
+            padding: 12px 16px;
+            border-radius: 12px 12px 12px 2px;
+            max-width: 95%;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            font-size: 0.92rem;
+            line-height: 1.5;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.25s ease;
+        }
+        .wa-bubble.phishing-detected {
+            border-left: 4px solid #ef4444 !important;
+            background: rgba(239, 68, 68, 0.12) !important;
+            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.25) !important;
+        }
+        .wa-time {
+            font-size: 0.72rem;
+            color: #8696a0;
+            float: right;
+            margin-top: 6px;
+            margin-left: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .wa-sample-pill {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(37, 211, 102, 0.25);
+            background: rgba(37, 211, 102, 0.06);
+            color: #e9edef;
+            border-radius: 10px;
+            padding: 10px 14px;
+            text-align: left;
+            width: 100%;
+        }
+        .wa-sample-pill:hover, .wa-sample-pill.active {
+            background: rgba(37, 211, 102, 0.18) !important;
+            border-color: #25d366 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(37, 211, 102, 0.2);
+        }
+
         /* Dynamic 3D Card Hover Transformation */
         .liquid-glass-card {
             transform-style: preserve-3d;
@@ -1820,6 +1907,11 @@
                             <i class="fa-solid fa-link me-1 text-success"></i> URL Sandbox
                         </button>
                     </li>
+                    <li class="nav-item">
+                        <button class="nav-link rounded-pill px-3 py-1 font-mono small text-white" id="tab-whatsapp-btn" data-bs-toggle="pill" data-bs-target="#tab-whatsapp" type="button">
+                            <i class="fa-brands fa-whatsapp me-1 text-success"></i> WhatsApp Message Lab
+                        </button>
+                    </li>
                 </ul>
             </div>
 
@@ -1902,6 +1994,42 @@
                                 <span class="badge bg-success-subtle text-success font-mono" style="font-size: 0.7rem;">Clean 0%</span>
                             </button>
                         </div>
+                        <div class="col-md-4">
+                            <button class="sim-btn threat-sim sim-btn-whatsapp d-flex justify-content-between align-items-center" onclick="runSimulation('whatsapp_otp')">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="fa-brands fa-whatsapp fs-4 text-success"></i>
+                                    <div>
+                                        <div class="fw-bold small text-white">WhatsApp 6-Digit OTP Hijack</div>
+                                        <div class="text-danger small fw-semibold" style="font-size: 0.74rem;">🚨 Urgent Account Takeover</div>
+                                    </div>
+                                </div>
+                                <span class="badge bg-danger-subtle text-danger font-mono" style="font-size: 0.7rem;">98% Score</span>
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="sim-btn threat-sim sim-btn-whatsapp d-flex justify-content-between align-items-center" onclick="runSimulation('whatsapp_lottery')">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="fa-brands fa-whatsapp fs-4 text-success"></i>
+                                    <div>
+                                        <div class="fw-bold small text-white">WhatsApp ₹25L KBC Lucky Draw</div>
+                                        <div class="text-danger small fw-semibold" style="font-size: 0.74rem;">🚨 Advance Fee Scam</div>
+                                    </div>
+                                </div>
+                                <span class="badge bg-danger-subtle text-danger font-mono" style="font-size: 0.7rem;">94% Score</span>
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="sim-btn threat-sim sim-btn-whatsapp d-flex justify-content-between align-items-center" onclick="runSimulation('whatsapp_job')">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="fa-brands fa-whatsapp fs-4 text-success"></i>
+                                    <div>
+                                        <div class="fw-bold small text-white">WhatsApp Like & Earn Job</div>
+                                        <div class="text-danger small fw-semibold" style="font-size: 0.74rem;">🚨 Task & Pyramid Scam</div>
+                                    </div>
+                                </div>
+                                <span class="badge bg-danger-subtle text-danger font-mono" style="font-size: 0.7rem;">95% Score</span>
+                            </button>
+                        </div>
                     </div>
                     <div id="simFeedback" class="small p-2 rounded-3 d-none font-mono"></div>
                 </div>
@@ -1946,6 +2074,113 @@
                         </div>
                     </form>
                     <div id="urlResultBox" class="mt-3 p-3 rounded-3 d-none"></div>
+                </div>
+
+                <!-- TAB 4: WhatsApp Message Lab & Sample Inspector -->
+                <div class="tab-pane fade" id="tab-whatsapp" role="tabpanel">
+                    <div class="row g-3">
+                        <!-- Left Column: Preloaded WhatsApp Sample Scenarios -->
+                        <div class="col-lg-5">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="fw-bold text-white small">
+                                    <i class="fa-brands fa-whatsapp text-success me-1"></i> WhatsApp Sample Messages
+                                </span>
+                                <span class="badge bg-success-subtle text-success font-mono" style="font-size: 0.7rem;">Click to Load</span>
+                            </div>
+                            <p class="small text-sub-high mb-3">
+                                Test real-world WhatsApp phishing attacks, OTP scams, and deceptive lottery messages directly with the AI model:
+                            </p>
+                            <div class="d-flex flex-column gap-2" id="waSamplesList">
+                                <button type="button" class="wa-sample-pill active" onclick="loadWhatsAppSample('wa_otp')">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="fw-bold small text-white"><i class="fa-solid fa-key text-danger me-1"></i> 6-Digit OTP Hijack</span>
+                                        <span class="badge bg-danger-subtle text-danger font-mono" style="font-size: 0.68rem;">98% Threat</span>
+                                    </div>
+                                    <div class="text-sub-high small" style="font-size: 0.78rem;">"Someone requested a 6-digit code for your WhatsApp..."</div>
+                                </button>
+                                <button type="button" class="wa-sample-pill" onclick="loadWhatsAppSample('wa_lottery')">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="fw-bold small text-white"><i class="fa-solid fa-gift text-warning me-1"></i> ₹25L KBC Lucky Draw</span>
+                                        <span class="badge bg-danger-subtle text-danger font-mono" style="font-size: 0.68rem;">94% Threat</span>
+                                    </div>
+                                    <div class="text-sub-high small" style="font-size: 0.78rem;">"CONGRATULATIONS! Your number won ₹25,00,000 in KBC..."</div>
+                                </button>
+                                <button type="button" class="wa-sample-pill" onclick="loadWhatsAppSample('wa_job')">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="fw-bold small text-white"><i class="fa-solid fa-briefcase text-info me-1"></i> YouTube Like & Earn Job</span>
+                                        <span class="badge bg-danger-subtle text-danger font-mono" style="font-size: 0.68rem;">95% Threat</span>
+                                    </div>
+                                    <div class="text-sub-high small" style="font-size: 0.78rem;">"Part-time job: Like videos & earn ₹3,000 - ₹8,000 daily..."</div>
+                                </button>
+                                <button type="button" class="wa-sample-pill" onclick="loadWhatsAppSample('wa_ebill')">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="fw-bold small text-white"><i class="fa-solid fa-bolt-lightning text-warning me-1"></i> Electricity Power Cut Threat</span>
+                                        <span class="badge bg-danger-subtle text-danger font-mono" style="font-size: 0.68rem;">92% Threat</span>
+                                    </div>
+                                    <div class="text-sub-high small" style="font-size: 0.78rem;">"Your electricity power will be disconnected tonight at 9:30 PM..."</div>
+                                </button>
+                                <button type="button" class="wa-sample-pill" onclick="loadWhatsAppSample('wa_clean')">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="fw-bold small text-white"><i class="fa-solid fa-user-group text-success me-1"></i> Family Lunch Invitation</span>
+                                        <span class="badge bg-success-subtle text-success font-mono" style="font-size: 0.68rem;">Clean 0%</span>
+                                    </div>
+                                    <div class="text-sub-high small" style="font-size: 0.78rem;">"Hey everyone! Are we still meeting for lunch tomorrow?..."</div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Interactive WhatsApp UI & AI Live Scan -->
+                        <div class="col-lg-7">
+                            <div class="wa-chat-container mb-3">
+                                <div class="wa-header">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="wa-avatar" id="waPreviewAvatar">
+                                            <i class="fa-brands fa-whatsapp"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold text-white small" id="waPreviewName">WhatsApp Security Team</div>
+                                            <div class="text-sub-high small font-mono" style="font-size: 0.72rem;" id="waPreviewPhone">+1 (555) 019-2831</div>
+                                        </div>
+                                    </div>
+                                    <span class="badge bg-danger-subtle text-danger font-mono small" id="waThreatBadge">
+                                        <i class="fa-solid fa-triangle-exclamation me-1"></i> Threat Sample
+                                    </span>
+                                </div>
+                                <div class="wa-body">
+                                    <div class="wa-bubble phishing-detected" id="waBubbleElement">
+                                        <div id="waBubbleText">
+                                            🚨 [WhatsApp Official Security Alert] Someone requested a 6-digit registration code for your WhatsApp account from another device. If this was not you, your account will be disabled in 12 hours. Cancel this request and verify your phone number immediately at: <span class="text-warning text-decoration-underline">http://whatsapp-support-auth.com/verify?code=98214</span>. Do NOT share this code with anyone!
+                                        </div>
+                                        <div class="wa-time">
+                                            <span id="waTimeDisplay">10:42 AM</span>
+                                            <i class="fa-solid fa-check-double text-info"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Custom Message Input -->
+                            <div class="mb-3">
+                                <label class="form-label text-white small fw-bold d-flex justify-content-between align-items-center">
+                                    <span>Or Test Any Custom WhatsApp Message:</span>
+                                    <span class="text-sub-high" style="font-size: 0.74rem;">Paste from your phone</span>
+                                </label>
+                                <textarea id="waCustomMessageInput" class="form-control font-mono small" rows="3" placeholder="Paste incoming WhatsApp message text here to test with BERT AI..."></textarea>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button type="button" class="btn btn-success flex-grow-1" id="btnScanWhatsApp" onclick="executeWhatsAppAnalysis()">
+                                    <i class="fa-brands fa-whatsapp me-2"></i> Scan WhatsApp Message with AI
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="clearWhatsAppInput()" title="Clear">
+                                    <i class="fa-solid fa-rotate-left"></i>
+                                </button>
+                            </div>
+
+                            <!-- Live Analysis Output Container -->
+                            <div id="waScanResultBox" class="mt-3 p-3 rounded-3 d-none"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -3079,6 +3314,189 @@
                 btn.disabled = false;
             }
         });
+
+        /* =========================================================
+           WHATSAPP MESSAGE LAB & SAMPLE INSPECTOR
+           ========================================================= */
+        const waSampleData = {
+            "wa_otp": {
+                name: "WhatsApp Security Team",
+                phone: "+1 (555) 019-2831",
+                time: "10:42 AM",
+                threat: true,
+                message: "🚨 [WhatsApp Official Security Alert] Someone requested a 6-digit registration code for your WhatsApp account from another device. If this was not you, your account will be disabled in 12 hours. Cancel this request and verify your phone number immediately at: http://whatsapp-support-auth.com/verify?code=98214. Do NOT share this code with anyone!"
+            },
+            "wa_lottery": {
+                name: "KBC Mega Draw Department",
+                phone: "+91 98765 43210",
+                time: "11:15 AM",
+                threat: true,
+                message: "🎉 CONGRATULATIONS! Your WhatsApp number has won ₹25,00,000 ($30,000) in the 2026 KBC & WhatsApp International Mega Draw! To claim your cash prize directly in your bank account, wire your processing fee and contact Manager Vijay Kumar on WhatsApp: http://claim-whatsapp-rewards.ml/kbc. Offer valid for 24 hours only!"
+            },
+            "wa_job": {
+                name: "Global Recruitment HR",
+                phone: "+44 7700 900077",
+                time: "01:20 PM",
+                threat: true,
+                message: "Hello! We noticed your profile on LinkedIn. Our company is hiring part-time assistants. Task: Just like and subscribe to 3 YouTube videos per day. Payment: ₹500 per video, daily payout ₹3,00,0 - ₹8,000 via Google Pay / Paytm. Click here to chat with HR manager on WhatsApp: http://wa-chat-hr-recruitment.com/task?id=JOB889. Limited slots!"
+            },
+            "wa_ebill": {
+                name: "Electricity Power Office",
+                phone: "+91 88776 65544",
+                time: "04:05 PM",
+                threat: true,
+                message: "Dear Consumer, Your electricity power will be disconnected tonight at 9:30 PM from the power station because your previous month bill was not updated. Please immediately contact our electricity officer Mr. Sharma at 8877665544 or pay pending bill online via: http://ebill-update-gov.in/pay. Urgent action required!"
+            },
+            "wa_clean": {
+                name: "Family & Friends Group",
+                phone: "+91 98234 56789",
+                time: "Yesterday",
+                threat: false,
+                message: "Hey everyone! Are we still meeting for lunch tomorrow at 1:30 PM at the cafe? Please let me know who is coming so I can reserve the table. Looking forward to catching up with everyone!"
+            }
+        };
+
+        let currentWaSampleId = "wa_otp";
+
+        function loadWhatsAppSample(sampleId) {
+            currentWaSampleId = sampleId;
+            const sample = waSampleData[sampleId];
+            if (!sample) return;
+
+            document.querySelectorAll('.wa-sample-pill').forEach(pill => pill.classList.remove('active'));
+            if (window.event && window.event.currentTarget) {
+                window.event.currentTarget.classList.add('active');
+            }
+
+            document.getElementById('waPreviewName').innerText = sample.name;
+            document.getElementById('waPreviewPhone').innerText = sample.phone;
+            document.getElementById('waTimeDisplay').innerText = sample.time;
+
+            const formatted = sample.message.replace(/(http[s]?:\/\/[^\s]+)/g, '<span class="text-warning text-decoration-underline">$1</span>');
+            document.getElementById('waBubbleText').innerHTML = formatted;
+
+            const bubble = document.getElementById('waBubbleElement');
+            const badge = document.getElementById('waThreatBadge');
+            if (sample.threat) {
+                bubble.classList.add('phishing-detected');
+                badge.className = 'badge bg-danger-subtle text-danger font-mono small';
+                badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation me-1"></i> Threat Sample';
+            } else {
+                bubble.classList.remove('phishing-detected');
+                badge.className = 'badge bg-success-subtle text-success font-mono small';
+                badge.innerHTML = '<i class="fa-solid fa-circle-check me-1"></i> Clean Sample';
+            }
+
+            document.getElementById('waCustomMessageInput').value = sample.message;
+            document.getElementById('waScanResultBox').classList.add('d-none');
+        }
+
+        function clearWhatsAppInput() {
+            document.getElementById('waCustomMessageInput').value = '';
+            document.getElementById('waBubbleText').innerText = 'Type or paste a WhatsApp message below to preview...';
+            document.getElementById('waScanResultBox').classList.add('d-none');
+            document.getElementById('waBubbleElement').classList.remove('phishing-detected');
+            document.querySelectorAll('.wa-sample-pill').forEach(pill => pill.classList.remove('active'));
+        }
+
+        const customWaInput = document.getElementById('waCustomMessageInput');
+        if (customWaInput) {
+            customWaInput.addEventListener('input', (e) => {
+                const val = e.target.value.trim();
+                if (val) {
+                    const formatted = val.replace(/(http[s]?:\/\/[^\s]+)/g, '<span class="text-warning text-decoration-underline">$1</span>');
+                    document.getElementById('waBubbleText').innerHTML = formatted;
+                } else {
+                    document.getElementById('waBubbleText').innerText = 'Type or paste a WhatsApp message below to preview...';
+                }
+            });
+        }
+
+        async function executeWhatsAppAnalysis() {
+            const btn = document.getElementById('btnScanWhatsApp');
+            const resBox = document.getElementById('waScanResultBox');
+            const customText = document.getElementById('waCustomMessageInput').value.trim();
+
+            let activeSample = waSampleData[currentWaSampleId] || waSampleData["wa_otp"];
+            let messageText = customText || activeSample.message;
+            let senderName = customText ? "Custom WhatsApp Contact" : activeSample.name;
+            let phone = customText ? "+Unknown" : activeSample.phone;
+
+            if (!messageText) {
+                alert("Please select a sample or paste a WhatsApp message to analyze.");
+                return;
+            }
+
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i> Analyzing WhatsApp Message with BERT...';
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('/api/whatsapp/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: messageText,
+                        sender_name: senderName,
+                        phone: phone
+                    })
+                });
+                const data = await res.json();
+                resBox.classList.remove('d-none');
+
+                if (data.success) {
+                    const bubble = document.getElementById('waBubbleElement');
+                    const badge = document.getElementById('waThreatBadge');
+
+                    if (data.analysis.is_phishing) {
+                        playThreatAlarm();
+                        bubble.classList.add('phishing-detected');
+                        badge.className = 'badge bg-danger text-white font-mono small';
+                        badge.innerHTML = `🚨 PHISHING (${data.analysis.threat_score}%)`;
+
+                        resBox.className = 'mt-3 p-3 rounded-4 alert alert-danger border-danger';
+                        resBox.innerHTML = `
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-danger fs-6 px-3 py-1 rounded-pill">🚨 WHATSAPP PHISHING DETECTED</span>
+                                <span class="fw-bold font-mono fs-5 text-danger">Threat Score: ${data.analysis.threat_score}%</span>
+                            </div>
+                            <div class="small mb-2"><strong>Sender:</strong> ${data.record.sender}</div>
+                            <ul class="mb-0 small ps-3">
+                                ${(data.analysis.recommendations || []).map(r => `<li class="fw-medium">${r}</li>`).join('')}
+                            </ul>
+                        `;
+                        showToast(`🚨 WhatsApp Scam: ${data.analysis.threat_score}%`, `From ${phone}: Threat intercepted and logged!`, true, data.record.id);
+                    } else {
+                        playSafeChime();
+                        bubble.classList.remove('phishing-detected');
+                        badge.className = 'badge bg-success text-white font-mono small';
+                        badge.innerHTML = `🛡️ SAFE (0%)`;
+
+                        resBox.className = 'mt-3 p-3 rounded-4 alert alert-success border-success';
+                        resBox.innerHTML = `
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-success fs-6 px-3 py-1 rounded-pill">🛡️ VERIFIED SAFE WHATSAPP MESSAGE</span>
+                                <span class="fw-bold font-mono fs-5 text-success">Threat Score: ${data.analysis.threat_score}%</span>
+                            </div>
+                            <p class="mb-0 small mt-2 fw-medium">Passed neural semantic & URL security analysis. No malicious phishing indicators found.</p>
+                        `;
+                        showToast('🛡️ Verified Safe WhatsApp Message', `From ${phone}: Clean message confirmed.`, false, data.record.id);
+                    }
+
+                    prependRowToTable(data.record);
+                    updateCounters(data.analysis.is_phishing);
+                } else {
+                    resBox.className = 'mt-3 p-3 rounded-4 alert alert-danger';
+                    resBox.innerText = 'Analysis error: ' + (data.error || 'Unknown error');
+                }
+            } catch (err) {
+                resBox.classList.remove('d-none');
+                resBox.className = 'mt-3 p-3 rounded-4 alert alert-danger';
+                resBox.innerText = 'Network error: ' + err.message;
+            } finally {
+                btn.innerHTML = '<i class="fa-brands fa-whatsapp me-2"></i> Scan WhatsApp Message with AI';
+                btn.disabled = false;
+            }
+        }
 
         /* =========================================================
            SETTINGS MODAL & IMAP CONNECTOR

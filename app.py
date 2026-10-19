@@ -393,6 +393,26 @@ def simulate_email_api():
             "sender": "no-reply@zoom.us",
             "subject": "Invitation: Quarterly Security & Architecture Review",
             "body": "You are invited to Quarterly Security Review on Thursday at 3:00 PM. Join Zoom meeting: https://zoom.us/j/123456789. Meeting passcode: 456789. See you there."
+        },
+        "whatsapp_otp": {
+            "sender": "[WhatsApp Support] +1 (555) 019-2831",
+            "subject": "🚨 WhatsApp Alert: 6-Digit Verification Code Requested",
+            "body": "Official WhatsApp Security Notification:\n\nSomeone requested a 6-digit registration code for your WhatsApp account from an unknown IP address. If this was not you, your account access will be terminated within 12 hours.\n\nPlease verify your identity immediately at: http://whatsapp-support-auth.com/verify?code=98214\n\nDo not share your verification code with anyone."
+        },
+        "whatsapp_lottery": {
+            "sender": "[WhatsApp Rewards] +91 98765 43210",
+            "subject": "🎉 Congratulations: You won ₹25,00,000 / $50,000 in WhatsApp Draw",
+            "body": "Dear WhatsApp User,\n\nCongratulations! Your mobile number has won ₹25,00,000 ($30,000) in the 2026 KBC & WhatsApp International Mega Lucky Draw! To claim your cash prize directly in your bank account, send your photo and processing fee. Contact Manager Vijay Kumar immediately on WhatsApp: http://claim-whatsapp-rewards.ml/kbc\n\nAct now! Claim code: WIN779."
+        },
+        "whatsapp_job": {
+            "sender": "[HR Global Recruiter] +44 7700 900077",
+            "subject": "💼 Work from Home: Earn ₹3,000 - ₹8,000 Daily Liking Videos",
+            "body": "Hello! We noticed your profile on LinkedIn. Our company is hiring part-time assistants. Task: Just like and subscribe to 3 YouTube videos per day. Payment: ₹500 per video, daily payout ₹3,000 - ₹8,000 via Google Pay / Paytm.\n\nClick here to chat with HR manager on WhatsApp: http://wa-chat-hr-recruitment.com/task?id=JOB889\n\nLimited spots available!"
+        },
+        "whatsapp_ebill": {
+            "sender": "[Electricity Board Alert] +91 88776 65544",
+            "subject": "⚠️ Urgent: Electricity Power Disconnection Notice",
+            "body": "Dear Consumer, Your electricity power will be disconnected tonight at 9:30 PM from the power sub-station because your previous month bill was not updated. Please immediately contact our electricity officer Mr. Sharma at 8877665544 or pay pending bill online via: http://ebill-update-gov.in/pay. Urgent action required!"
         }
     }
 
@@ -438,6 +458,107 @@ def analyze_url_api():
         return jsonify({"success": False, "error": "URL is required"}), 400
     res = analyze_url(url)
     return jsonify({"success": True, "result": res})
+
+# =========================================================
+# WhatsApp Sample Messages & Message Scanner API
+# =========================================================
+@app.route('/api/whatsapp/samples', methods=['GET'])
+def get_whatsapp_samples():
+    samples = [
+        {
+            "id": "wa_otp",
+            "title": "Account Hijack / 6-Digit OTP Scam",
+            "sender_name": "WhatsApp Security Team",
+            "phone": "+1 (555) 019-2831",
+            "time": "10:42 AM",
+            "category": "High Risk Phishing",
+            "threat_type": "danger",
+            "score": "98%",
+            "message": "🚨 [WhatsApp Official Security Alert] Someone requested a 6-digit registration code for your WhatsApp account from another device. If this was not you, your account will be disabled in 12 hours. Cancel this request and verify your phone number immediately at: http://whatsapp-support-auth.com/verify?code=98214. Do NOT share this code with anyone!"
+        },
+        {
+            "id": "wa_lottery",
+            "title": "KBC / WhatsApp International Lucky Draw",
+            "sender_name": "KBC Mega Draw Department",
+            "phone": "+91 98765 43210",
+            "time": "11:15 AM",
+            "category": "Advance Fee Fraud",
+            "threat_type": "danger",
+            "score": "94%",
+            "message": "🎉 CONGRATULATIONS! Your WhatsApp number has won ₹25,00,000 ($30,000) in the 2026 KBC & WhatsApp International Mega Draw! To claim your cash prize directly in your bank account, wire your processing fee and contact Manager Vijay Kumar on WhatsApp: http://claim-whatsapp-rewards.ml/kbc. Offer valid for 24 hours only!"
+        },
+        {
+            "id": "wa_job",
+            "title": "Part-Time YouTube Like & Earn Job",
+            "sender_name": "Global Recruitment HR",
+            "phone": "+44 7700 900077",
+            "time": "01:20 PM",
+            "category": "Task / Investment Scam",
+            "threat_type": "danger",
+            "score": "95%",
+            "message": "Hello! We noticed your profile on LinkedIn. Our company is hiring part-time assistants. Task: Just like and subscribe to 3 YouTube videos per day. Payment: ₹500 per video, daily payout ₹3,000 - ₹8,000 via Google Pay / Paytm. Click here to chat with HR manager on WhatsApp: http://wa-chat-hr-recruitment.com/task?id=JOB889. Limited slots!"
+        },
+        {
+            "id": "wa_ebill",
+            "title": "Urgent Electricity Power Disconnection",
+            "sender_name": "Electricity Power Office",
+            "phone": "+91 88776 65544",
+            "time": "04:05 PM",
+            "category": "Urgent Threat Scam",
+            "threat_type": "danger",
+            "score": "92%",
+            "message": "Dear Consumer, Your electricity power will be disconnected tonight at 9:30 PM from the power station because your previous month bill was not updated. Please immediately contact our electricity officer Mr. Sharma at 8877665544 or pay pending bill online via: http://ebill-update-gov.in/pay. Urgent action required!"
+        },
+        {
+            "id": "wa_clean",
+            "title": "Legitimate Family Lunch Invitation",
+            "sender_name": "Family & Friends Group",
+            "phone": "+91 98234 56789",
+            "time": "Yesterday",
+            "category": "Verified Clean",
+            "threat_type": "success",
+            "score": "Clean 0%",
+            "message": "Hey everyone! Are we still meeting for lunch tomorrow at 1:30 PM at the cafe? Please let me know who is coming so I can reserve the table. Looking forward to catching up with everyone!"
+        }
+    ]
+    return jsonify(samples)
+
+@app.route('/api/whatsapp/analyze', methods=['POST'])
+def analyze_whatsapp_message():
+    data = request.get_json() or {}
+    message = data.get("message", "").strip()
+    phone = data.get("phone", "+1-Unknown-Sender").strip()
+    sender_name = data.get("sender_name", "WhatsApp Contact").strip()
+
+    if not message:
+        return jsonify({"success": False, "error": "Message text is required"}), 400
+
+    subject = f"WhatsApp: {message[:50]}..."
+    sender_display = f"[WhatsApp] {sender_name} ({phone})"
+
+    analysis = process_email_analysis(subject, sender_display, message)
+
+    if analysis["is_phishing"]:
+        trigger_desktop_alert(sender_display, subject, analysis["threat_score"])
+
+    scan_rec = ScanRecord(
+        sender=sender_display,
+        subject=subject,
+        is_phishing=analysis["is_phishing"],
+        threat_score=analysis["threat_score"],
+        recommendations="\n".join(analysis["recommendations"])
+    )
+    db.session.add(scan_rec)
+    db.session.commit()
+
+    return jsonify({
+        "success": True,
+        "message": "🚨 Dangerous WhatsApp Phishing Scam Detected!" if analysis["is_phishing"] else "✅ Safe WhatsApp Message Verified",
+        "record": scan_rec.to_dict(),
+        "analysis": analysis,
+        "phone": phone,
+        "sender_name": sender_name
+    })
 
 @app.route('/api/latest-threat')
 def latest_threat_api():
