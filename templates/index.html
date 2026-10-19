@@ -1,0 +1,3308 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishShield AI — Liquid Glass Security Operations Hub</title>
+    <meta name="description" content="AI-powered email security scanner and real-time inbox monitor with liquid glass interface, fine-tuned BERT deep learning model, and URL threat heuristics.">
+    
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* =========================================================
+           ULTRA-PREMIUM LIQUID GLASS AESTHETICS & HIGH-VISIBILITY DESIGN SYSTEM
+           ========================================================= */
+        :root {
+            --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            /* Liquid Glass Palette (Dark Obsidian Glass Theme) */
+            --bg-canvas: #030712;
+            --glass-surface: rgba(11, 20, 44, 0.82);
+            --glass-surface-hover: rgba(18, 30, 64, 0.92);
+            --glass-surface-solid: rgba(8, 16, 36, 0.96);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --glass-border-hover: rgba(56, 189, 248, 0.7);
+            --glass-highlight: rgba(255, 255, 255, 0.4);
+            --glass-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.7), 
+                            inset 0 1.5px 1px var(--glass-highlight), 
+                            inset 0 -1px 2px rgba(0, 0, 0, 0.5);
+
+            /* Ultra-Readable High Contrast Text (Dark) */
+            --text-heading: #ffffff;
+            --text-body: #f8fafc;
+            --text-sub: #cbd5e1;
+            --text-muted: #94a3b8;
+            --text-highlight: #38bdf8;
+            --text-shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.8);
+
+            /* Liquid Neon Glow Accents */
+            --liquid-cyan: #00f2fe;
+            --liquid-blue: #38bdf8;
+            --liquid-violet: #a855f7;
+            --liquid-emerald: #10b981;
+            --liquid-crimson: #ff2a5f;
+            --liquid-amber: #f59e0b;
+
+            /* Liquid Caustic Shimmer */
+            --liquid-sheen: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.6) 50%, transparent 100%);
+        }
+
+        /* Light Theme: Frosted Crystalline Liquid Glass */
+        body.theme-light {
+            --bg-canvas: #f1f5f9;
+            --glass-surface: rgba(255, 255, 255, 0.9);
+            --glass-surface-hover: rgba(255, 255, 255, 0.97);
+            --glass-surface-solid: rgba(255, 255, 255, 0.98);
+            --glass-border: rgba(203, 213, 225, 0.9);
+            --glass-border-hover: rgba(2, 132, 199, 0.8);
+            --glass-highlight: rgba(255, 255, 255, 0.98);
+            --glass-shadow: 0 15px 35px -5px rgba(15, 23, 42, 0.08), 
+                            0 4px 12px rgba(15, 23, 42, 0.04),
+                            inset 0 1.5px 1px #ffffff;
+
+            /* Ultra-Readable High Contrast Text (Light) */
+            --text-heading: #0f172a;
+            --text-body: #1e293b;
+            --text-sub: #334155;
+            --text-muted: #475569;
+            --text-highlight: #0284c7;
+            --text-shadow-subtle: none;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-canvas);
+            background-image: radial-gradient(rgba(56, 189, 248, 0.09) 1.5px, transparent 1.5px);
+            background-size: 28px 28px;
+            color: var(--text-body);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            padding-bottom: 90px;
+            overflow-x: hidden;
+            position: relative;
+            transition: background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1), color 0.35s ease;
+        }
+
+        body.theme-light {
+            background-image: radial-gradient(rgba(148, 163, 184, 0.3) 1.5px, transparent 1.5px);
+        }
+
+        /* Ambient Floating Liquid Blobs (Refractive Liquid Glass Backdrop) */
+        .liquid-orb-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .liquid-orb {
+            position: absolute;
+            border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+            filter: blur(80px);
+            opacity: 0.52;
+            animation: liquidMorph 16s infinite alternate ease-in-out;
+            will-change: transform, border-radius;
+        }
+
+        .liquid-orb-1 {
+            width: 580px;
+            height: 580px;
+            background: radial-gradient(circle, #00f2fe 0%, #0284c7 45%, transparent 75%);
+            top: -140px;
+            left: -120px;
+            animation-duration: 20s;
+        }
+
+        .liquid-orb-2 {
+            width: 620px;
+            height: 620px;
+            background: radial-gradient(circle, #a855f7 0%, #ec4899 50%, transparent 75%);
+            top: 20%;
+            right: -160px;
+            animation-duration: 26s;
+            animation-delay: -4s;
+        }
+
+        .liquid-orb-3 {
+            width: 520px;
+            height: 520px;
+            background: radial-gradient(circle, #10b981 0%, #06b6d4 50%, transparent 75%);
+            bottom: -140px;
+            left: 25%;
+            animation-duration: 22s;
+            animation-delay: -8s;
+        }
+
+        .liquid-orb-4 {
+            width: 440px;
+            height: 440px;
+            background: radial-gradient(circle, #3b82f6 0%, #6366f1 50%, transparent 75%);
+            top: 60%;
+            left: -100px;
+            animation-duration: 24s;
+            animation-delay: -12s;
+        }
+
+        body.theme-light .liquid-orb {
+            opacity: 0.28;
+            filter: blur(95px);
+        }
+
+        @keyframes liquidMorph {
+            0% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+                border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+            }
+            33% {
+                transform: translate(60px, -40px) scale(1.12) rotate(120deg);
+                border-radius: 65% 35% 38% 62% / 55% 48% 52% 45%;
+            }
+            66% {
+                transform: translate(-40px, 50px) scale(0.92) rotate(240deg);
+                border-radius: 35% 65% 60% 40% / 40% 60% 40% 60%;
+            }
+            100% {
+                transform: translate(30px, 30px) scale(1.05) rotate(360deg);
+                border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+            }
+        }
+
+        /* Typography with Guaranteed Contrast & High Legibility */
+        h1, h2, h3, h4, h5, h6, .font-heading {
+            font-family: var(--font-display);
+            color: var(--text-heading) !important;
+            letter-spacing: -0.025em;
+            font-weight: 700;
+            text-shadow: var(--text-shadow-subtle);
+        }
+
+        .font-mono {
+            font-family: var(--font-mono);
+        }
+
+        .text-light-high {
+            color: #ffffff !important;
+        }
+
+        .text-sub-high {
+            color: var(--text-sub) !important;
+            font-weight: 500;
+        }
+
+        /* =========================================================
+           TRUE LIQUID GLASS PANELS & REFRACTIVE SURFACES
+           ========================================================= */
+        .liquid-glass-card {
+            background: var(--glass-surface);
+            backdrop-filter: blur(28px) saturate(200%);
+            -webkit-backdrop-filter: blur(28px) saturate(200%);
+            border: 1px solid var(--glass-border);
+            border-radius: 22px;
+            box-shadow: var(--glass-shadow);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), 
+                        box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), 
+                        border-color 0.28s ease, 
+                        background 0.35s ease;
+        }
+
+        /* Liquid Top Specular Edge Sheen */
+        .liquid-glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1.5px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.25) 20%, 
+                rgba(0, 242, 254, 0.8) 50%, 
+                rgba(255, 255, 255, 0.25) 80%, 
+                transparent 100%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Subtle Dynamic Glow Aura on Hover */
+        .liquid-glass-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 0%), rgba(56, 189, 248, 0.08), transparent 40%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            z-index: 0;
+        }
+
+        .liquid-glass-card:hover::after {
+            opacity: 1;
+        }
+
+        .liquid-glass-card:hover {
+            border-color: var(--glass-border-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 25px 60px -5px rgba(0, 0, 0, 0.75), 
+                        0 0 25px rgba(56, 189, 248, 0.2), 
+                        inset 0 1.5px 1px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Top Liquid Navbar */
+        .liquid-navbar {
+            background: rgba(4, 8, 20, 0.88);
+            backdrop-filter: blur(32px) saturate(210%);
+            -webkit-backdrop-filter: blur(32px) saturate(210%);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1030;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+            transition: background 0.35s ease, border-color 0.35s ease;
+        }
+
+        body.theme-light .liquid-navbar {
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+            border-bottom-color: rgba(203, 213, 225, 0.85);
+        }
+
+        .brand-logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .liquid-shield-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #00f2fe 0%, #38bdf8 45%, #a855f7 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 1.4rem;
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.5), inset 0 1.5px 1px rgba(255, 255, 255, 0.7);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .brand-logo-wrap:hover .liquid-shield-icon {
+            transform: scale(1.05) rotate(3deg);
+            box-shadow: 0 0 35px rgba(0, 242, 254, 0.75), inset 0 2px 2px #ffffff;
+        }
+
+        .brand-title {
+            font-size: 1.55rem;
+            font-weight: 800;
+            margin: 0;
+            line-height: 1.1;
+            color: var(--text-heading) !important;
+            letter-spacing: -0.025em;
+        }
+
+        .brand-glass-badge {
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            padding: 3px 10px;
+            border-radius: 9999px;
+            background: rgba(56, 189, 248, 0.18);
+            color: var(--liquid-cyan);
+            border: 1px solid rgba(56, 189, 248, 0.45);
+            text-transform: uppercase;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+        }
+
+        body.theme-light .brand-glass-badge {
+            background: rgba(2, 132, 199, 0.12);
+            color: #0284c7;
+            border-color: rgba(2, 132, 199, 0.35);
+        }
+
+        /* Animated Liquid Radar Badge */
+        .liquid-radar-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 7px 18px;
+            border-radius: 9999px;
+            background: rgba(16, 185, 129, 0.16);
+            border: 1px solid rgba(16, 185, 129, 0.5);
+            color: #10b981;
+            font-size: 0.85rem;
+            font-weight: 700;
+            box-shadow: 0 0 18px rgba(16, 185, 129, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            transition: all 0.25s ease;
+        }
+
+        .liquid-radar-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 12px #10b981;
+            position: relative;
+        }
+
+        .liquid-radar-dot::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid #10b981;
+            animation: radarPulse 1.8s infinite cubic-bezier(0, 0.2, 0.8, 1);
+        }
+
+        @keyframes radarPulse {
+            0% { transform: scale(0.6); opacity: 1; }
+            100% { transform: scale(2.4); opacity: 0; }
+        }
+
+        /* Liquid Glass Buttons */
+        .btn-liquid-primary {
+            background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
+            color: #ffffff !important;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 9999px;
+            padding: 8px 22px;
+            font-weight: 700;
+            font-size: 0.92rem;
+            box-shadow: 0 8px 25px rgba(2, 132, 199, 0.45), inset 0 1.5px 1px rgba(255, 255, 255, 0.5);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-liquid-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(2, 132, 199, 0.65), inset 0 1.5px 1px #ffffff;
+            background: linear-gradient(135deg, #0369a1 0%, #1d4ed8 100%);
+            color: #ffffff !important;
+        }
+
+        .btn-liquid-glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            color: var(--text-heading) !important;
+            border: 1px solid var(--glass-border);
+            border-radius: 9999px;
+            padding: 8px 18px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25);
+            transition: all 0.22s ease;
+        }
+
+        .btn-liquid-glass:hover {
+            background: rgba(56, 189, 248, 0.22);
+            border-color: var(--liquid-cyan);
+            color: #ffffff !important;
+            transform: translateY(-1px);
+            box-shadow: 0 0 18px rgba(0, 242, 254, 0.35), inset 0 1.5px 1px rgba(255, 255, 255, 0.4);
+        }
+
+        .btn-liquid-danger {
+            background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+            color: #ffffff !important;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 9999px;
+            padding: 8px 20px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            box-shadow: 0 6px 20px rgba(225, 29, 72, 0.4), inset 0 1.5px 1px rgba(255, 255, 255, 0.4);
+            transition: all 0.22s ease;
+        }
+
+        .btn-liquid-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(225, 29, 72, 0.65);
+            color: #ffffff !important;
+        }
+
+        /* KPI Metric Cards with Glossy Sheen */
+        .kpi-card {
+            padding: 1.6rem;
+            position: relative;
+        }
+
+        .kpi-card .kpi-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 800;
+            color: var(--text-sub) !important;
+        }
+
+        .kpi-card .kpi-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.09);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), inset 0 1.5px 1px rgba(255, 255, 255, 0.35);
+            transition: transform 0.25s ease;
+        }
+
+        .kpi-card:hover .kpi-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        body.theme-light .kpi-card .kpi-icon {
+            background: rgba(15, 23, 42, 0.05);
+            border-color: rgba(15, 23, 42, 0.1);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05), inset 0 1px 1px #ffffff;
+        }
+
+        .kpi-card .kpi-number {
+            font-family: var(--font-display);
+            font-size: 2.6rem;
+            font-weight: 800;
+            line-height: 1;
+            margin: 0.6rem 0 0.35rem 0;
+            color: var(--text-heading) !important;
+            letter-spacing: -0.02em;
+        }
+
+        /* Threat Red Alert Glass Banner */
+        .threat-alert-liquid {
+            background: linear-gradient(135deg, rgba(225, 29, 72, 0.3) 0%, rgba(136, 19, 55, 0.42) 100%);
+            border: 1.5px solid rgba(244, 63, 94, 0.65);
+            border-left: 8px solid var(--liquid-crimson);
+            border-radius: 20px;
+            padding: 1.4rem 1.6rem;
+            box-shadow: 0 20px 45px rgba(244, 63, 94, 0.25), inset 0 1.5px 1px rgba(255, 255, 255, 0.35);
+            animation: threatLiquidPulse 3s infinite ease-in-out;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes threatLiquidPulse {
+            0%, 100% { box-shadow: 0 0 25px rgba(244, 63, 94, 0.25), inset 0 1.5px 1px rgba(255, 255, 255, 0.35); }
+            50% { box-shadow: 0 0 50px rgba(244, 63, 94, 0.5), inset 0 1.5px 1px rgba(255, 255, 255, 0.5); }
+        }
+
+        /* Inputs & Form Controls with Pristine Legibility */
+        .form-control, .form-select {
+            background: var(--glass-surface-solid) !important;
+            border: 1.5px solid var(--glass-border) !important;
+            color: var(--text-heading) !important;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 14px;
+            padding: 12px 18px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+            transition: all 0.25s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--liquid-cyan) !important;
+            box-shadow: 0 0 0 3px rgba(0, 242, 254, 0.25), inset 0 1px 2px rgba(0, 0, 0, 0.4) !important;
+            background: rgba(12, 24, 52, 0.98) !important;
+            color: #ffffff !important;
+        }
+
+        .form-control::placeholder {
+            color: var(--text-muted) !important;
+            font-weight: 400;
+        }
+
+        select option {
+            background-color: #0b132b !important;
+            color: #ffffff !important;
+            font-weight: 500;
+            padding: 10px;
+        }
+
+        /* Search Input Box */
+        .liquid-search-box {
+            position: relative;
+        }
+
+        .liquid-search-box i.search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--liquid-cyan);
+            font-size: 1.05rem;
+            pointer-events: none;
+        }
+
+        .liquid-search-box input {
+            padding-left: 48px !important;
+            padding-right: 44px !important;
+            height: 48px;
+        }
+
+        .search-clear-btn {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 6px;
+            font-size: 1rem;
+            display: none;
+        }
+
+        .search-clear-btn:hover {
+            color: #ffffff;
+        }
+
+        /* Filter Pills */
+        .liquid-pill {
+            padding: 8px 18px;
+            border-radius: 9999px;
+            font-size: 0.86rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-sub);
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid var(--glass-border);
+            transition: all 0.22s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .liquid-pill:hover, .liquid-pill.active {
+            background: rgba(56, 189, 248, 0.25);
+            border-color: var(--liquid-cyan);
+            color: #ffffff !important;
+            box-shadow: 0 0 18px rgba(0, 242, 254, 0.35);
+        }
+
+        .liquid-pill.threat-pill:hover, .liquid-pill.threat-pill.active {
+            background: rgba(244, 63, 94, 0.28);
+            border-color: var(--liquid-crimson);
+            color: #ffffff !important;
+            box-shadow: 0 0 18px rgba(244, 63, 94, 0.45);
+        }
+
+        .liquid-pill.safe-pill:hover, .liquid-pill.safe-pill.active {
+            background: rgba(16, 185, 129, 0.25);
+            border-color: var(--liquid-emerald);
+            color: #ffffff !important;
+            box-shadow: 0 0 18px rgba(16, 185, 129, 0.4);
+        }
+
+        /* High Visibility Liquid Table */
+        .table-liquid {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 12px;
+            margin-bottom: 0;
+        }
+
+        .table-liquid thead th {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-sub);
+            font-weight: 800;
+            padding: 10px 18px;
+            border: none;
+        }
+
+        .table-liquid tbody tr {
+            background: var(--glass-surface);
+            backdrop-filter: blur(18px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .table-liquid tbody tr:hover {
+            transform: translateY(-3px);
+            border-color: var(--glass-border-hover);
+            background: var(--glass-surface-hover);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), 0 0 25px rgba(56, 189, 248, 0.25), inset 0 1.5px 1px rgba(255, 255, 255, 0.45);
+        }
+
+        .table-liquid tbody td {
+            padding: 16px 18px;
+            vertical-align: middle;
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+            color: var(--text-body);
+        }
+
+        .table-liquid tbody td:first-child {
+            border-left: 1px solid var(--glass-border);
+            border-top-left-radius: 16px;
+            border-bottom-left-radius: 16px;
+        }
+
+        .table-liquid tbody td:last-child {
+            border-right: 1px solid var(--glass-border);
+            border-top-right-radius: 16px;
+            border-bottom-right-radius: 16px;
+        }
+
+        /* Badges with High Contrast */
+        .badge-threat-critical {
+            background: rgba(244, 63, 94, 0.28);
+            color: #ff4d6d !important;
+            border: 1.5px solid #ff4d6d;
+            border-radius: 9999px;
+            padding: 6px 14px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            box-shadow: 0 0 16px rgba(255, 77, 109, 0.35);
+        }
+
+        .badge-safe {
+            background: rgba(16, 185, 129, 0.25);
+            color: #10b981 !important;
+            border: 1.5px solid #10b981;
+            border-radius: 9999px;
+            padding: 6px 14px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
+        }
+
+        /* Threat Meter Fill */
+        .threat-meter-bg {
+            height: 9px;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.12);
+            overflow: hidden;
+            width: 100%;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .threat-meter-fill {
+            height: 100%;
+            border-radius: 9999px;
+            transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Simulation Buttons Grid */
+        .sim-btn {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 14px 18px;
+            color: var(--text-heading);
+            text-align: left;
+            transition: all 0.22s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+        }
+
+        .sim-btn:hover {
+            background: rgba(56, 189, 248, 0.2);
+            border-color: var(--liquid-cyan);
+            transform: translateY(-2px);
+            color: #ffffff;
+            box-shadow: 0 10px 24px rgba(0, 242, 254, 0.35);
+        }
+
+        .sim-btn.threat-sim:hover {
+            background: rgba(244, 63, 94, 0.25);
+            border-color: var(--liquid-crimson);
+            box-shadow: 0 10px 24px rgba(244, 63, 94, 0.4);
+        }
+
+        /* Toast Container */
+        #cyberToastContainer {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 1090;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 440px;
+            pointer-events: none;
+        }
+
+        .cyber-toast {
+            pointer-events: auto;
+            background: rgba(10, 18, 38, 0.95);
+            backdrop-filter: blur(28px) saturate(200%);
+            -webkit-backdrop-filter: blur(28px) saturate(200%);
+            border: 1.5px solid var(--liquid-cyan);
+            border-radius: 18px;
+            padding: 18px;
+            color: #ffffff;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 242, 254, 0.35), inset 0 1.5px 1px rgba(255, 255, 255, 0.4);
+            animation: toastSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            position: relative;
+        }
+
+        .cyber-toast.threat {
+            border-color: var(--liquid-crimson);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 35px rgba(244, 63, 94, 0.45), inset 0 1.5px 1px rgba(255, 255, 255, 0.4);
+        }
+
+        @keyframes toastSlideIn {
+            from { transform: translateX(110%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Live Table Insertion Animation */
+        @keyframes rowInsert {
+            0% { opacity: 0; transform: translateY(-20px) scale(0.98); background: rgba(56, 189, 248, 0.4); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .row-inserted {
+            animation: rowInsert 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* =========================================================
+           CRITICAL LIGHT THEME VISIBILITY ENFORCEMENT
+           ========================================================= */
+        body.theme-light .text-white {
+            color: #0f172a !important;
+            text-shadow: none !important;
+        }
+        body.theme-light .text-white-50 {
+            color: #475569 !important;
+        }
+        body.theme-light .text-sub-high {
+            color: #334155 !important;
+            font-weight: 600 !important;
+        }
+        body.theme-light .brand-title {
+            color: #0f172a !important;
+        }
+        body.theme-light .kpi-card .kpi-label {
+            color: #475569 !important;
+        }
+        body.theme-light .kpi-card .kpi-number {
+            color: #0f172a !important;
+        }
+        body.theme-light .table-liquid thead th {
+            color: #334155 !important;
+        }
+        body.theme-light .table-liquid tbody tr {
+            background: rgba(255, 255, 255, 0.94) !important;
+            border-color: rgba(203, 213, 225, 0.9) !important;
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.05) !important;
+        }
+        body.theme-light .table-liquid tbody tr:hover {
+            background: #ffffff !important;
+            border-color: #0284c7 !important;
+            box-shadow: 0 8px 25px rgba(2, 132, 199, 0.15) !important;
+        }
+        body.theme-light .table-liquid tbody td {
+            color: #1e293b !important;
+            border-color: rgba(203, 213, 225, 0.8) !important;
+        }
+        body.theme-light .subject-col {
+            color: #0f172a !important;
+        }
+        body.theme-light .modal-content {
+            background: rgba(255, 255, 255, 0.98) !important;
+            border-color: rgba(2, 132, 199, 0.4) !important;
+            color: #0f172a !important;
+            box-shadow: 0 25px 60px rgba(15, 23, 42, 0.25) !important;
+        }
+        body.theme-light .modal-content .text-white {
+            color: #0f172a !important;
+        }
+        body.theme-light .modal-content .text-sub-high {
+            color: #475569 !important;
+        }
+        body.theme-light .modal-content .btn-close-white {
+            filter: invert(1) grayscale(100%) brightness(20%) !important;
+        }
+        body.theme-light .sim-btn {
+            background: rgba(255, 255, 255, 0.88) !important;
+            border-color: #cbd5e1 !important;
+            color: #0f172a !important;
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.05) !important;
+        }
+        body.theme-light .sim-btn:hover {
+            background: #ffffff !important;
+            border-color: #0284c7 !important;
+            box-shadow: 0 8px 25px rgba(2, 132, 199, 0.2) !important;
+        }
+        body.theme-light .sim-btn .text-white {
+            color: #0f172a !important;
+        }
+        body.theme-light .form-control, 
+        body.theme-light .form-select {
+            background: #ffffff !important;
+            border: 1.5px solid #cbd5e1 !important;
+            color: #0f172a !important;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+        }
+        body.theme-light .form-control:focus, 
+        body.theme-light .form-select:focus {
+            background: #ffffff !important;
+            border-color: #0284c7 !important;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2) !important;
+            color: #0f172a !important;
+        }
+        body.theme-light .form-control::placeholder {
+            color: #64748b !important;
+        }
+        body.theme-light select option {
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+        }
+        body.theme-light .btn-liquid-glass {
+            background: rgba(255, 255, 255, 0.85) !important;
+            border-color: #cbd5e1 !important;
+            color: #0f172a !important;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06) !important;
+        }
+        body.theme-light .btn-liquid-glass:hover {
+            background: #ffffff !important;
+            border-color: #0284c7 !important;
+            color: #0284c7 !important;
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.25) !important;
+        }
+        body.theme-light .liquid-pill {
+            background: rgba(255, 255, 255, 0.85) !important;
+            border-color: #cbd5e1 !important;
+            color: #334155 !important;
+        }
+        body.theme-light .liquid-pill:hover,
+        body.theme-light .liquid-pill.active {
+            background: #0284c7 !important;
+            color: #ffffff !important;
+            border-color: #0284c7 !important;
+        }
+        body.theme-light .cyber-toast {
+            background: rgba(255, 255, 255, 0.96) !important;
+            color: #0f172a !important;
+            border: 1.5px solid #0284c7 !important;
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.15) !important;
+        }
+        body.theme-light .cyber-toast .text-white {
+            color: #0f172a !important;
+        }
+        body.theme-light .cyber-toast .text-sub-high {
+            color: #475569 !important;
+        }
+        body.theme-light .threat-alert-liquid {
+            background: linear-gradient(135deg, rgba(254, 226, 226, 0.9) 0%, rgba(254, 205, 211, 0.95) 100%) !important;
+            border: 1.5px solid rgba(244, 63, 94, 0.7) !important;
+            border-left: 8px solid #e11d48 !important;
+            color: #881337 !important;
+        }
+        body.theme-light .threat-alert-liquid .text-white {
+            color: #881337 !important;
+        }
+        body.theme-light .threat-alert-liquid .text-white-50 {
+            color: #9f1239 !important;
+        }
+        #inspectScoreBanner .text-white,
+        #inspectScoreBanner .font-heading,
+        #inspectScoreBanner .font-mono,
+        body.theme-light #inspectScoreBanner .text-white,
+        body.theme-light #inspectScoreBanner .font-heading,
+        body.theme-light #inspectScoreBanner .font-mono {
+            color: #ffffff !important;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) !important;
+        }
+
+        /* =========================================================
+           THEME 3: AQUA BIOLUMINESCENT (OCEANIC REEF)
+           ========================================================= */
+        body.theme-aqua {
+            --bg-canvas: #02141c;
+            --glass-surface: rgba(4, 30, 42, 0.84);
+            --glass-surface-hover: rgba(6, 44, 60, 0.94);
+            --glass-surface-solid: rgba(3, 24, 34, 0.98);
+            --glass-border: rgba(45, 212, 191, 0.28);
+            --glass-border-hover: rgba(52, 211, 153, 0.8);
+            --glass-highlight: rgba(255, 255, 255, 0.42);
+            --glass-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.75), inset 0 1.5px 1px var(--glass-highlight);
+            --text-heading: #ffffff;
+            --text-body: #f0fdfa;
+            --text-sub: #ccfbf1;
+            --text-muted: #5eead4;
+            --text-highlight: #2dd4bf;
+            --liquid-cyan: #2dd4bf;
+            background-image: radial-gradient(rgba(45, 212, 191, 0.12) 1.5px, transparent 1.5px);
+        }
+        body.theme-aqua .liquid-orb-1 { background: radial-gradient(circle, #10b981 0%, #0d9488 45%, transparent 75%); }
+        body.theme-aqua .liquid-orb-2 { background: radial-gradient(circle, #06b6d4 0%, #0284c7 50%, transparent 75%); }
+        body.theme-aqua .liquid-orb-3 { background: radial-gradient(circle, #34d399 0%, #059669 50%, transparent 75%); }
+        body.theme-aqua .liquid-orb-4 { background: radial-gradient(circle, #38bdf8 0%, #0e7490 50%, transparent 75%); }
+        body.theme-aqua .liquid-shield-icon { background: linear-gradient(135deg, #10b981 0%, #06b6d4 50%, #3b82f6 100%); }
+
+        /* =========================================================
+           THEME 4: CYBERPUNK NEON VIOLET
+           ========================================================= */
+        body.theme-cyber {
+            --bg-canvas: #090314;
+            --glass-surface: rgba(26, 10, 52, 0.85);
+            --glass-surface-hover: rgba(38, 16, 75, 0.94);
+            --glass-surface-solid: rgba(18, 7, 38, 0.98);
+            --glass-border: rgba(168, 85, 247, 0.32);
+            --glass-border-hover: rgba(236, 72, 153, 0.85);
+            --glass-highlight: rgba(255, 255, 255, 0.45);
+            --glass-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.8), inset 0 1.5px 1px var(--glass-highlight);
+            --text-heading: #ffffff;
+            --text-body: #faf5ff;
+            --text-sub: #f3e8ff;
+            --text-muted: #d8b4fe;
+            --text-highlight: #c084fc;
+            --liquid-cyan: #c084fc;
+            background-image: radial-gradient(rgba(192, 132, 252, 0.12) 1.5px, transparent 1.5px);
+        }
+        body.theme-cyber .liquid-orb-1 { background: radial-gradient(circle, #a855f7 0%, #7c3aed 45%, transparent 75%); }
+        body.theme-cyber .liquid-orb-2 { background: radial-gradient(circle, #ec4899 0%, #db2777 50%, transparent 75%); }
+        body.theme-cyber .liquid-orb-3 { background: radial-gradient(circle, #6366f1 0%, #4338ca 50%, transparent 75%); }
+        body.theme-cyber .liquid-orb-4 { background: radial-gradient(circle, #f43f5e 0%, #9333ea 50%, transparent 75%); }
+        body.theme-cyber .liquid-shield-icon { background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #f43f5e 100%); }
+
+        /* =========================================================
+           THEME 5: PETALPAY ROSE DOLLAR (LILAC MEADOW FINTECH)
+           ========================================================= */
+        body.theme-petal {
+            --bg-canvas: #f6edf3;
+            --glass-surface: rgba(255, 250, 253, 0.88);
+            --glass-surface-hover: rgba(255, 255, 255, 0.96);
+            --glass-surface-solid: rgba(253, 246, 250, 0.98);
+            --glass-border: rgba(216, 167, 177, 0.45);
+            --glass-border-hover: rgba(192, 108, 132, 0.75);
+            --glass-highlight: rgba(255, 255, 255, 0.95);
+            --glass-shadow: 0 16px 40px -8px rgba(45, 18, 37, 0.08), 
+                            0 4px 12px rgba(45, 18, 37, 0.04),
+                            inset 0 1.5px 1px #ffffff;
+
+            /* High-Contrast Deep Plum & Dark Violet Typography */
+            --text-heading: #2d1225;
+            --text-body: #35152b;
+            --text-sub: #5c2c4c;
+            --text-muted: #8e3e63;
+            --text-highlight: #c06c84;
+            --text-shadow-subtle: none;
+
+            /* Accents & Rose Gold Metallic Accents */
+            --liquid-cyan: #c06c84;
+            --liquid-blue: #8e3e63;
+            --liquid-violet: #8e3e63;
+            --liquid-emerald: #059669;
+            --liquid-crimson: #be123c;
+            --liquid-amber: #d97706;
+
+            background-color: #f6edf3;
+            background-image: linear-gradient(135deg, #f6edf3 0%, #ebdce6 100%),
+                              radial-gradient(rgba(192, 108, 132, 0.15) 1.5px, transparent 1.5px);
+            background-size: 100% 100%, 28px 28px;
+            color: #35152b;
+        }
+
+        body.theme-petal .text-white {
+            color: #2d1225 !important;
+            text-shadow: none !important;
+        }
+        body.theme-petal .text-white-50 {
+            color: #5c2c4c !important;
+        }
+        body.theme-petal .text-sub-high {
+            color: #5c2c4c !important;
+            font-weight: 600 !important;
+        }
+        body.theme-petal .brand-title {
+            color: #2d1225 !important;
+        }
+        body.theme-petal .brand-glass-badge {
+            background: rgba(192, 108, 132, 0.14) !important;
+            color: #8e3e63 !important;
+            border-color: rgba(192, 108, 132, 0.45) !important;
+        }
+        body.theme-petal .liquid-shield-icon {
+            background: linear-gradient(135deg, #2d1225 0%, #8e3e63 50%, #c06c84 100%) !important;
+            box-shadow: 0 0 25px rgba(192, 108, 132, 0.4), inset 0 1.5px 1px rgba(255, 255, 255, 0.6) !important;
+            color: #ffffff !important;
+        }
+        body.theme-petal .liquid-navbar {
+            background: rgba(246, 237, 243, 0.92) !important;
+            box-shadow: 0 10px 30px rgba(45, 18, 37, 0.06) !important;
+            border-bottom-color: rgba(216, 167, 177, 0.65) !important;
+        }
+        body.theme-petal .btn-liquid-primary {
+            background: #2d1225 !important;
+            color: #ffffff !important;
+            border: 1px solid rgba(192, 108, 132, 0.45) !important;
+            border-radius: 9999px !important;
+            box-shadow: 0 8px 22px rgba(45, 18, 37, 0.22), inset 0 1px 1px rgba(255, 255, 255, 0.3) !important;
+        }
+        body.theme-petal .btn-liquid-primary:hover {
+            background: #441a38 !important;
+            color: #ffffff !important;
+            box-shadow: 0 12px 28px rgba(45, 18, 37, 0.32), inset 0 1.5px 1px rgba(255, 255, 255, 0.4) !important;
+        }
+        body.theme-petal .btn-liquid-glass {
+            background: rgba(255, 255, 255, 0.75) !important;
+            border-color: rgba(216, 167, 177, 0.7) !important;
+            color: #2d1225 !important;
+            border-radius: 9999px !important;
+            box-shadow: 0 2px 8px rgba(45, 18, 37, 0.05) !important;
+        }
+        body.theme-petal .btn-liquid-glass:hover {
+            background: #ffffff !important;
+            border-color: #c06c84 !important;
+            color: #8e3e63 !important;
+            box-shadow: 0 4px 16px rgba(192, 108, 132, 0.25) !important;
+        }
+        body.theme-petal .liquid-palette-bar {
+            background: rgba(255, 255, 255, 0.75) !important;
+            border-color: rgba(216, 167, 177, 0.7) !important;
+        }
+        body.theme-petal .palette-pill {
+            color: #5c2c4c !important;
+        }
+        body.theme-petal .palette-pill.active {
+            background: #2d1225 !important;
+            color: #ffffff !important;
+            box-shadow: 0 2px 10px rgba(45, 18, 37, 0.25) !important;
+        }
+        body.theme-petal .liquid-pill {
+            background: rgba(255, 255, 255, 0.75) !important;
+            border-color: rgba(216, 167, 177, 0.65) !important;
+            color: #5c2c4c !important;
+        }
+        body.theme-petal .liquid-pill:hover,
+        body.theme-petal .liquid-pill.active {
+            background: #2d1225 !important;
+            color: #ffffff !important;
+            border-color: #2d1225 !important;
+            box-shadow: 0 4px 14px rgba(45, 18, 37, 0.2) !important;
+        }
+        body.theme-petal .liquid-pill.threat-pill.active {
+            background: #be123c !important;
+            color: #ffffff !important;
+            border-color: #be123c !important;
+        }
+        body.theme-petal .liquid-pill.safe-pill.active {
+            background: #059669 !important;
+            color: #ffffff !important;
+            border-color: #059669 !important;
+        }
+        body.theme-petal .kpi-card .kpi-label {
+            color: #5c2c4c !important;
+        }
+        body.theme-petal .kpi-card .kpi-number {
+            color: #2d1225 !important;
+        }
+        body.theme-petal .kpi-card .kpi-icon {
+            background: rgba(192, 108, 132, 0.12) !important;
+            border-color: rgba(216, 167, 177, 0.5) !important;
+        }
+        body.theme-petal .table-liquid thead th {
+            color: #5c2c4c !important;
+        }
+        body.theme-petal .table-liquid tbody tr {
+            background: rgba(255, 255, 255, 0.88) !important;
+            border-color: rgba(216, 167, 177, 0.6) !important;
+            box-shadow: 0 4px 16px rgba(45, 18, 37, 0.04) !important;
+        }
+        body.theme-petal .table-liquid tbody tr:hover {
+            background: #ffffff !important;
+            border-color: #c06c84 !important;
+            box-shadow: 0 8px 24px rgba(192, 108, 132, 0.18) !important;
+        }
+        body.theme-petal .table-liquid tbody td {
+            color: #35152b !important;
+            border-color: rgba(216, 167, 177, 0.5) !important;
+        }
+        body.theme-petal .subject-col {
+            color: #2d1225 !important;
+        }
+        body.theme-petal .form-control,
+        body.theme-petal .form-select {
+            background: #ffffff !important;
+            border: 1.5px solid rgba(216, 167, 177, 0.7) !important;
+            color: #2d1225 !important;
+        }
+        body.theme-petal .form-control:focus,
+        body.theme-petal .form-select:focus {
+            background: #ffffff !important;
+            border-color: #c06c84 !important;
+            box-shadow: 0 0 0 3px rgba(192, 108, 132, 0.2) !important;
+            color: #2d1225 !important;
+        }
+        body.theme-petal .form-control::placeholder {
+            color: #a87994 !important;
+        }
+        body.theme-petal select option {
+            background-color: #ffffff !important;
+            color: #2d1225 !important;
+        }
+        body.theme-petal .sim-btn {
+            background: rgba(255, 255, 255, 0.82) !important;
+            border-color: rgba(216, 167, 177, 0.6) !important;
+            color: #2d1225 !important;
+        }
+        body.theme-petal .sim-btn:hover {
+            background: #ffffff !important;
+            border-color: #c06c84 !important;
+            box-shadow: 0 8px 24px rgba(192, 108, 132, 0.18) !important;
+        }
+        body.theme-petal .sim-btn .text-white {
+            color: #2d1225 !important;
+        }
+        body.theme-petal .modal-content {
+            background: rgba(255, 250, 253, 0.98) !important;
+            border-color: rgba(192, 108, 132, 0.4) !important;
+            color: #2d1225 !important;
+        }
+        body.theme-petal .modal-content .text-white {
+            color: #2d1225 !important;
+        }
+        body.theme-petal .modal-content .text-sub-high {
+            color: #5c2c4c !important;
+        }
+        body.theme-petal .modal-content .btn-close-white {
+            filter: invert(1) grayscale(100%) brightness(20%) !important;
+        }
+        body.theme-petal .cyber-toast {
+            background: rgba(255, 250, 253, 0.96) !important;
+            color: #2d1225 !important;
+            border: 1.5px solid #c06c84 !important;
+            box-shadow: 0 20px 45px rgba(45, 18, 37, 0.15) !important;
+        }
+        body.theme-petal .cyber-toast .text-white {
+            color: #2d1225 !important;
+        }
+        body.theme-petal .cyber-toast .text-sub-high {
+            color: #5c2c4c !important;
+        }
+        body.theme-petal .threat-alert-liquid {
+            background: linear-gradient(135deg, rgba(255, 228, 230, 0.92) 0%, rgba(254, 205, 211, 0.95) 100%) !important;
+            border: 1.5px solid rgba(244, 63, 94, 0.7) !important;
+            border-left: 8px solid #be123c !important;
+            color: #881337 !important;
+        }
+        body.theme-petal .threat-alert-liquid .text-white {
+            color: #881337 !important;
+        }
+        body.theme-petal .threat-alert-liquid .text-white-50 {
+            color: #9f1239 !important;
+        }
+        body.theme-petal .liquid-orb {
+            opacity: 0.35;
+            filter: blur(85px);
+        }
+        body.theme-petal .liquid-orb-1 { background: radial-gradient(circle, #c06c84 0%, #ebdce6 55%, transparent 75%); }
+        body.theme-petal .liquid-orb-2 { background: radial-gradient(circle, #d8a7b1 0%, #f6edf3 55%, transparent 75%); }
+        body.theme-petal .liquid-orb-3 { background: radial-gradient(circle, #8e3e63 0%, #c06c84 50%, transparent 75%); }
+        body.theme-petal .liquid-orb-4 { background: radial-gradient(circle, #ebdce6 0%, #d8a7b1 50%, transparent 75%); }
+        body.theme-petal .liquid-water-ripple {
+            border-color: #c06c84;
+            box-shadow: 0 0 20px #c06c84, inset 0 0 15px rgba(255, 255, 255, 0.6);
+        }
+        body.theme-petal .shimmer-beam::before {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0) 0%, 
+                rgba(255, 255, 255, 0.4) 25%, 
+                #c06c84 50%, 
+                #8e3e63 70%, 
+                rgba(255, 255, 255, 0) 100%);
+        }
+        body.theme-petal .shimmer-beam::after {
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.1) 30%,
+                rgba(192, 108, 132, 0.22) 50%,
+                rgba(255, 255, 255, 0.1) 70%,
+                transparent 100%
+            );
+        }
+        body.theme-petal .audio-wave-bar {
+            background-color: #8e3e63;
+        }
+        body.theme-petal .liquid-radar-pill {
+            background: rgba(142, 62, 99, 0.12);
+            border-color: rgba(142, 62, 99, 0.4);
+            color: #8e3e63;
+        }
+        body.theme-petal .liquid-radar-dot {
+            background: #8e3e63;
+            box-shadow: 0 0 10px #8e3e63;
+        }
+        body.theme-petal .liquid-radar-dot::after {
+            border-color: #8e3e63;
+        }
+        body.theme-petal .nav-pills .nav-link.active {
+            background-color: #2d1225 !important;
+            color: #ffffff !important;
+        }
+        body.theme-petal .nav-pills .nav-link:not(.active) {
+            color: #5c2c4c !important;
+        }
+        body.theme-petal .nav-pills .nav-link:not(.active):hover {
+            color: #2d1225 !important;
+            background: rgba(192, 108, 132, 0.12) !important;
+        }
+
+        /* =========================================================
+           LIQUID PALETTE BAR & CONTROLS
+           ========================================================= */
+        .liquid-palette-bar {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 9999px;
+            padding: 3px 5px;
+            gap: 4px;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2);
+        }
+
+        body.theme-light .liquid-palette-bar {
+            background: rgba(15, 23, 42, 0.06);
+            border-color: rgba(203, 213, 225, 0.9);
+        }
+
+        .palette-pill {
+            background: none;
+            border: none;
+            color: var(--text-sub);
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.22s ease;
+        }
+
+        .palette-pill:hover {
+            color: var(--text-heading);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .palette-pill.active {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff !important;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+        }
+
+        body.theme-light .palette-pill.active {
+            background: #ffffff;
+            color: #0f172a !important;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
+        }
+
+        .palette-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* =========================================================
+           INTERACTIVE WATER RIPPLE ON CLICK
+           ========================================================= */
+        .liquid-water-ripple {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            border: 2px solid var(--liquid-cyan, #00f2fe);
+            box-shadow: 0 0 20px var(--liquid-cyan, #00f2fe), inset 0 0 15px rgba(255, 255, 255, 0.4);
+            transform: translate(-50%, -50%) scale(0.1);
+            animation: waterRippleExpand 0.75s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+            z-index: 99999;
+        }
+
+        @keyframes waterRippleExpand {
+            0% {
+                transform: translate(-50%, -50%) scale(0.1);
+                opacity: 0.85;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(3.2);
+                opacity: 0;
+            }
+        }
+
+        /* =========================================================
+           BRAND-COLORED ATTACK SIMULATOR CARDS
+           ========================================================= */
+        .sim-btn-paypal { border-left: 4px solid #eab308 !important; }
+        .sim-btn-paypal:hover { box-shadow: 0 10px 24px rgba(234, 179, 8, 0.35) !important; border-color: #eab308 !important; }
+
+        .sim-btn-netflix { border-left: 4px solid #e50914 !important; }
+        .sim-btn-netflix:hover { box-shadow: 0 10px 24px rgba(229, 9, 20, 0.35) !important; border-color: #e50914 !important; }
+
+        .sim-btn-ceo { border-left: 4px solid #06b6d4 !important; }
+        .sim-btn-ceo:hover { box-shadow: 0 10px 24px rgba(6, 182, 212, 0.35) !important; border-color: #06b6d4 !important; }
+
+        .sim-btn-lottery { border-left: 4px solid #f59e0b !important; }
+        .sim-btn-lottery:hover { box-shadow: 0 10px 24px rgba(245, 158, 11, 0.35) !important; border-color: #f59e0b !important; }
+
+        .sim-btn-github { border-left: 4px solid #a855f7 !important; }
+        .sim-btn-github:hover { box-shadow: 0 10px 24px rgba(168, 85, 247, 0.35) !important; border-color: #a855f7 !important; }
+
+        .sim-btn-zoom { border-left: 4px solid #38bdf8 !important; }
+        .sim-btn-zoom:hover { box-shadow: 0 10px 24px rgba(56, 189, 248, 0.35) !important; border-color: #38bdf8 !important; }
+
+        /* Dynamic 3D Card Hover Transformation */
+        .liquid-glass-card {
+            transform-style: preserve-3d;
+            will-change: transform;
+            transition: transform 0.18s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+
+        .liquid-glass-card:hover {
+            box-shadow: 0 25px 60px -5px rgba(0, 0, 0, 0.75), 
+                        0 0 30px var(--liquid-cyan, #00f2fe), 
+                        inset 0 1.5px 1px rgba(255, 255, 255, 0.6);
+        }
+
+        /* =========================================================
+           PROFESSIONAL ANIMATIONS: SHIMMER BEAM & ENTRANCE REVEAL
+           ========================================================= */
+        @keyframes liquidRevealUp {
+            0% {
+                opacity: 0;
+                transform: translateY(22px) scale(0.985);
+                filter: blur(6px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0);
+            }
+        }
+
+        .animate-reveal-1 { animation: liquidRevealUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both; }
+        .animate-reveal-2 { animation: liquidRevealUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.14s both; }
+        .animate-reveal-3 { animation: liquidRevealUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both; }
+        .animate-reveal-4 { animation: liquidRevealUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.30s both; }
+        .animate-reveal-5 { animation: liquidRevealUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.38s both; }
+
+        /* Traveling Shimmer Beam (Linear.app / VisionOS style light border) */
+        .shimmer-beam {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shimmer-beam::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            padding: 1.5px;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0) 0%, 
+                rgba(255, 255, 255, 0.2) 25%, 
+                var(--liquid-cyan, #00f2fe) 50%, 
+                #a855f7 70%, 
+                rgba(255, 255, 255, 0) 100%);
+            background-size: 250% 250%;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: shimmerBeamShift 7s ease infinite;
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0.95;
+        }
+
+        @keyframes shimmerBeamShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Traveling Specular Light Reflection Sweep (Apple VisionOS / macOS Sequoia style) */
+        .shimmer-beam::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.04) 30%,
+                rgba(0, 242, 254, 0.18) 50%,
+                rgba(255, 255, 255, 0.04) 70%,
+                transparent 100%
+            );
+            transform: skewX(-25deg);
+            animation: liquidSheenSweep 9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes liquidSheenSweep {
+            0% { left: -150%; opacity: 0; }
+            15% { opacity: 0.7; }
+            35% { left: 160%; opacity: 0; }
+            100% { left: 160%; opacity: 0; }
+        }
+
+        /* Equalizer Audio Dancing Bars */
+        .audio-wave-bars {
+            display: inline-flex;
+            align-items: flex-end;
+            gap: 2.5px;
+            height: 13px;
+            vertical-align: middle;
+            transition: opacity 0.25s ease;
+        }
+
+        .audio-wave-bar {
+            width: 2.5px;
+            height: 100%;
+            background-color: var(--liquid-cyan, #00f2fe);
+            border-radius: 2px;
+            animation: audioBounce 1.1s ease-in-out infinite alternate;
+            transform-origin: bottom;
+            transition: height 0.3s ease, background-color 0.3s ease;
+        }
+
+        .audio-wave-bar:nth-child(1) { animation-delay: 0.08s; }
+        .audio-wave-bar:nth-child(2) { animation-delay: 0.32s; }
+        .audio-wave-bar:nth-child(3) { animation-delay: 0.56s; }
+
+        @keyframes audioBounce {
+            0% { height: 25%; opacity: 0.45; }
+            100% { height: 100%; opacity: 1; }
+        }
+
+        .audio-wave-bars.paused .audio-wave-bar {
+            animation-play-state: paused !important;
+            height: 3px !important;
+            opacity: 0.4;
+            background-color: var(--text-muted);
+        }
+
+        /* Animated Sonar Radar Pill Sweep */
+        .liquid-radar-sweep {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .liquid-radar-sweep::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(16, 185, 129, 0.3) 50%, transparent 100%);
+            animation: radarSonarSweep 3.2s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes radarSonarSweep {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        /* Ambient Breathing Glass Float */
+        @keyframes ambientFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        .ambient-float {
+            animation: ambientFloat 6s ease-in-out infinite;
+        }
+
+        /* Micro-Interactions: Fluid Tactile Button Response */
+        .btn-liquid-primary:active, 
+        .btn-liquid-glass:active, 
+        .btn-liquid-danger:active, 
+        .sim-btn:active, 
+        .palette-pill:active {
+            transform: scale(0.96) !important;
+            transition: transform 0.08s ease !important;
+        }
+
+        /* KPI Count-Up Glow Highlight Animation */
+        @keyframes countGlow {
+            0% { text-shadow: 0 0 0 rgba(0, 242, 254, 0); }
+            50% { text-shadow: 0 0 20px var(--liquid-cyan, #00f2fe); }
+            100% { text-shadow: 0 0 0 rgba(0, 242, 254, 0); }
+        }
+
+        .counter-glow {
+            animation: countGlow 0.8s ease-out;
+        }
+    </style>
+</head>
+<body class="theme-petal">
+
+    <!-- Ambient Liquid Orbs in Background -->
+    <div class="liquid-orb-canvas">
+        <div class="liquid-orb liquid-orb-1"></div>
+        <div class="liquid-orb-2 liquid-orb"></div>
+        <div class="liquid-orb liquid-orb-3"></div>
+        <div class="liquid-orb liquid-orb-4"></div>
+    </div>
+
+    <!-- Toast Notification Anchor -->
+    <div id="cyberToastContainer"></div>
+
+    <!-- Top Liquid Navbar -->
+    <nav class="liquid-navbar">
+        <div class="container d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <a href="{{ url_for('scan_history') }}" class="brand-logo-wrap">
+                <div class="liquid-shield-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="brand-title">PhishShield <span style="color: var(--liquid-cyan);">AI</span></span>
+                        <span class="brand-glass-badge">Liquid Glass</span>
+                    </div>
+                    <small class="text-sub-high fw-semibold" style="font-size: 0.75rem;">BERT Neural Defense • Real-Time Radar</small>
+                </div>
+            </a>
+
+            <!-- Right Status Hub -->
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+                <!-- Liquid Radar Status Pill with Sonar Sweep -->
+                <div class="liquid-radar-pill liquid-radar-sweep" id="navRadarBox" title="Inbox Radar status">
+                    <span class="liquid-radar-dot" id="navRadarBlip"></span>
+                    <span id="navRadarText">Monitoring Active</span>
+                </div>
+
+                <!-- Desktop Notification Toggle -->
+                <button class="btn btn-sm btn-liquid-glass" id="btnRequestNotification" title="Enable Windows desktop notifications">
+                    <i class="fa-solid fa-bell text-warning me-1"></i> <span id="notifBtnLabel">Desktop Alerts</span>
+                </button>
+
+                <!-- Audio Siren Toggle with Dancing Wave Bars -->
+                <button class="btn btn-sm btn-liquid-glass" id="btnToggleSound" title="Toggle audio alert siren">
+                    <span class="audio-wave-bars me-1" id="soundWaveBars">
+                        <span class="audio-wave-bar"></span>
+                        <span class="audio-wave-bar"></span>
+                        <span class="audio-wave-bar"></span>
+                    </span>
+                    <span id="soundLabel">Sound On</span>
+                </button>
+
+                <!-- Immediate Scan Button -->
+                <button class="btn btn-sm btn-liquid-primary" id="btnScanInboxNow" title="Scan inbox right now">
+                    <i class="fa-solid fa-bolt me-1 text-warning"></i> Scan Now
+                </button>
+
+                <!-- Settings Modal Trigger -->
+                <button class="btn btn-sm btn-liquid-glass" data-bs-toggle="modal" data-bs-target="#connectModal" title="IMAP / Gmail Settings">
+                    <i class="fa-solid fa-gear me-1"></i> Settings
+                </button>
+
+                <!-- Liquid Glass Theme Presets -->
+                <div class="liquid-palette-bar d-none d-md-inline-flex" id="navPaletteBar" title="Select Liquid Glass Aesthetic">
+                    <button type="button" class="palette-pill active" id="pill-petal" onclick="setLiquidTheme('petal')" title="Petalpay Rose Dollar (Lilac Meadow)">
+                        <span class="palette-dot" style="background: #c06c84; box-shadow: 0 0 6px #c06c84;"></span>
+                        <span>Rose Meadow</span>
+                    </button>
+                    <button type="button" class="palette-pill" id="pill-dark" onclick="setLiquidTheme('dark')" title="Obsidian Liquid Cyan">
+                        <span class="palette-dot" style="background: #00f2fe; box-shadow: 0 0 6px #00f2fe;"></span>
+                        <span>Obsidian</span>
+                    </button>
+                    <button type="button" class="palette-pill" id="pill-light" onclick="setLiquidTheme('light')" title="Crystal Frost Pearl">
+                        <span class="palette-dot" style="background: #38bdf8; box-shadow: 0 0 6px #38bdf8;"></span>
+                        <span>Crystal</span>
+                    </button>
+                    <button type="button" class="palette-pill" id="pill-aqua" onclick="setLiquidTheme('aqua')" title="Oceanic Bioluminescent Aqua">
+                        <span class="palette-dot" style="background: #10b981; box-shadow: 0 0 6px #10b981;"></span>
+                        <span>Aqua</span>
+                    </button>
+                    <button type="button" class="palette-pill" id="pill-cyber" onclick="setLiquidTheme('cyber')" title="Cyberpunk Neon Violet">
+                        <span class="palette-dot" style="background: #a855f7; box-shadow: 0 0 6px #a855f7;"></span>
+                        <span>Cyber</span>
+                    </button>
+                </div>
+
+                <!-- Quick Theme Switcher Shortcut -->
+                <button class="btn btn-sm btn-liquid-glass" id="btnThemeToggle" onclick="toggleTheme()" title="Quick Cycle Liquid Glass Theme">
+                    <i class="fa-solid fa-moon text-info me-1" id="themeIcon"></i> <span id="themeLabel">Liquid Dark</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4" style="position: relative; z-index: 2;">
+
+        <!-- 🚨 CRITICAL PHISHING RED ALERT LIQUID BANNER (If threat detected) -->
+        {% if latest_threat %}
+        <div class="threat-alert-liquid mb-4 animate-reveal-1 shimmer-beam" id="heroThreatBanner">
+            <div class="d-flex align-items-start gap-3 flex-wrap">
+                <div class="fs-1 text-danger">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-1">
+                        <h4 class="mb-0 text-white fw-bold font-heading">
+                            🚨 CRITICAL INTERCEPTION: High-Risk Phishing Threat Detected!
+                        </h4>
+                        <span class="badge-threat-critical fs-6">
+                            <i class="fa-solid fa-radiation"></i> Threat Score: {{ latest_threat.threat_score }}%
+                        </span>
+                    </div>
+                    <p class="mb-2 text-white fw-semibold small">
+                        ⚠️ DO NOT OPEN THIS EMAIL • DO NOT CLICK ANY EMBEDDED LINKS • DO NOT ENTER PASSWORDS OR BANK DATA
+                    </p>
+                    <div class="d-flex flex-wrap gap-3 small">
+                        <div><strong class="text-white-50">Sender:</strong> <span class="text-white fw-semibold">{{ latest_threat.sender }}</span></div>
+                        <div><strong class="text-white-50">Subject:</strong> <span class="text-white fw-semibold">{{ latest_threat.subject }}</span></div>
+                        <div><strong class="text-white-50">Time:</strong> <span class="text-white font-mono">{{ latest_threat.scanned_at }}</span></div>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-sm btn-liquid-danger" onclick="inspectRecord({{ latest_threat.id }})">
+                        <i class="fa-solid fa-magnifying-glass me-1"></i> Inspect Threat
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- LIQUID GLASS KPI METRIC CARDS -->
+        <div class="row g-3 mb-4">
+            <div class="col-6 col-lg-3">
+                <div class="liquid-glass-card kpi-card animate-reveal-1">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="kpi-label font-mono">Total Analyzed</span>
+                        <div class="kpi-icon" style="color: #38bdf8;">
+                            <i class="fa-solid fa-inbox"></i>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-baseline justify-content-between mt-1">
+                        <div class="kpi-number font-mono" id="statTotalScans">{{ total_scans }}</div>
+                        <span class="badge bg-primary-subtle text-cyan font-mono small fw-bold">Live AI</span>
+                    </div>
+                    <div class="progress mt-2" style="height: 5px; background: rgba(255,255,255,0.1); border-radius: 9999px;">
+                        <div class="progress-bar bg-info" style="width: 100%; border-radius: 9999px;"></div>
+                    </div>
+                    <small class="text-sub-high fw-semibold d-block mt-2"><i class="fa-solid fa-microchip text-info me-1"></i> Scanned by BERT AI</small>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-3">
+                <div class="liquid-glass-card kpi-card animate-reveal-2">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="kpi-label font-mono" style="color: #fda4af !important;">Threats Blocked</span>
+                        <div class="kpi-icon" style="color: #f43f5e;">
+                            <i class="fa-solid fa-shield-virus"></i>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-baseline justify-content-between mt-1">
+                        <div class="kpi-number font-mono" style="color: #ff4d6d !important;" id="statThreatCount">{{ phishing_count }}</div>
+                        <span class="badge bg-danger-subtle text-danger font-mono small fw-bold">Quarantined</span>
+                    </div>
+                    <div class="progress mt-2" style="height: 5px; background: rgba(255,255,255,0.1); border-radius: 9999px;">
+                        {% set phish_percent = 0 if total_scans == 0 else (((phishing_count / total_scans) * 100) | round(1)) %}
+                        <div class="progress-bar bg-danger" id="statThreatBar" style="width: {{ phish_percent }}%; border-radius: 9999px;"></div>
+                    </div>
+                    <small class="text-danger fw-semibold d-block mt-2"><i class="fa-solid fa-ban me-1"></i> Intercepted Threats</small>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-3">
+                <div class="liquid-glass-card kpi-card animate-reveal-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="kpi-label font-mono" style="color: #a7f3d0 !important;">Verified Safe</span>
+                        <div class="kpi-icon" style="color: #10b981;">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-baseline justify-content-between mt-1">
+                        <div class="kpi-number font-mono" style="color: #34d399 !important;" id="statSafeCount">{{ safe_count }}</div>
+                        <span class="badge bg-success-subtle text-success font-mono small fw-bold">Clean</span>
+                    </div>
+                    <div class="progress mt-2" style="height: 5px; background: rgba(255,255,255,0.1); border-radius: 9999px;">
+                        {% set safe_percent = 100 if total_scans == 0 else (((safe_count / total_scans) * 100) | round(1)) %}
+                        <div class="progress-bar bg-success" id="statSafeBar" style="width: {{ safe_percent }}%; border-radius: 9999px;"></div>
+                    </div>
+                    <small class="text-success fw-semibold d-block mt-2"><i class="fa-solid fa-shield-check me-1"></i> Legitimate Emails</small>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-3">
+                <div class="liquid-glass-card kpi-card animate-reveal-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="kpi-label font-mono" style="color: #e9d5ff !important;">Cleanliness Index</span>
+                        <div class="kpi-icon" style="color: #c084fc;">
+                            <i class="fa-solid fa-chart-pie"></i>
+                        </div>
+                    </div>
+                    {% set health_score = 100 if total_scans == 0 else (((safe_count / total_scans) * 100) | round(1)) %}
+                    <div class="d-flex align-items-baseline justify-content-between mt-1">
+                        <div class="kpi-number font-mono" style="color: #d8b4fe !important;" id="statHealthIndex">{{ health_score }}%</div>
+                        <span class="badge bg-purple-subtle text-info font-mono small fw-bold">Optimum</span>
+                    </div>
+                    <div class="progress mt-2" style="height: 5px; background: rgba(255,255,255,0.1); border-radius: 9999px;">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" id="statHealthBar" style="width: {{ health_score }}%; border-radius: 9999px;"></div>
+                    </div>
+                    <small class="text-sub-high fw-semibold d-block mt-2"><i class="fa-solid fa-heart-pulse text-warning me-1"></i> Safe Ratio</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- LIQUID GLASS TESTING LAB & SIMULATOR -->
+        <div class="liquid-glass-card p-4 mb-4 animate-reveal-3 shimmer-beam">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <div>
+                    <span class="badge bg-primary-subtle text-cyan font-mono small mb-1">Interactive Sandbox</span>
+                    <h5 class="fw-bold mb-0 text-white font-heading">
+                        <i class="fa-solid fa-flask-vial text-warning me-2"></i> Instant Attack Simulator & AI Sandbox
+                    </h5>
+                </div>
+                <ul class="nav nav-pills gap-1" id="labTabs" role="tablist">
+                    <li class="nav-item">
+                        <button class="nav-link active rounded-pill px-3 py-1 font-mono small text-white" id="tab-simulator-btn" data-bs-toggle="pill" data-bs-target="#tab-simulator" type="button">
+                            <i class="fa-solid fa-bolt me-1 text-warning"></i> 1-Click Attack Simulator
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link rounded-pill px-3 py-1 font-mono small text-white" id="tab-custom-btn" data-bs-toggle="pill" data-bs-target="#tab-custom" type="button">
+                            <i class="fa-solid fa-terminal me-1 text-info"></i> Manual Email Analyzer
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link rounded-pill px-3 py-1 font-mono small text-white" id="tab-url-btn" data-bs-toggle="pill" data-bs-target="#tab-url" type="button">
+                            <i class="fa-solid fa-link me-1 text-success"></i> URL Sandbox
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="tab-content pt-2">
+                <!-- TAB 1: 1-Click Attack Simulator -->
+                <div class="tab-pane fade show active" id="tab-simulator" role="tabpanel">
+                    <p class="small text-sub-high mb-3">
+                        Test live notifications, threat scoring, and real-time dashboard updates instantly without waiting for incoming emails. Click any scenario below:
+                    </p>
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-4">
+                            <button class="sim-btn threat-sim sim-btn-paypal d-flex justify-content-between align-items-center" onclick="runSimulation('paypal')">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="fa-brands fa-paypal fs-4 text-warning"></i>
+                                    <div>
+                                        <div class="fw-bold small text-white">PayPal Account Freeze</div>
+                                        <div class="text-danger small fw-semibold" style="font-size: 0.74rem;">🚨 Urgent Phishing</div>
+                                    </div>
+                                </div>
+                                <span class="badge bg-danger-subtle text-danger font-mono" style="font-size: 0.7rem;">96% Score</span>
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="sim-btn threat-sim sim-btn-netflix d-flex justify-content-between align-items-center" onclick="runSimulation('netflix')">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="fa-solid fa-film fs-4 text-danger"></i>
+                                    <div>
+                                        <div class="fw-bold small text-white">Netflix Billing Decline</div>
+                                        <div class="text-danger small fw-semibold" style="font-size: 0.74rem;">🚨 Credential Harvest</div>
+                                    </div>
+                                </div>
+                                <span class="badge bg-danger-subtle text-danger font-mono" style="font-size: 0.7rem;">94% Score</span>
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="sim-btn threat-sim sim-btn-ceo d-flex justify-content-between align-items-center" onclick="runSimulation('ceo_wire')">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="fa-solid fa-money-bill-transfer fs-4 text-info"></i>
+                                    <div>
+                                        <div class="fw-bold small text-white">CEO Emergency Wire</div>
+                                        <div class="text-danger small fw-semibold" style="font-size: 0.74rem;">🚨 Executive Whaling</div>
+                                    </div>
+                                </div>
+                                <span class="badge bg-danger-subtle text-danger font-mono" style="font-size: 0.7rem;">98% Score</span>
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="sim-btn threat-sim sim-btn-lottery d-flex justify-content-between align-items-center" onclick="runSimulation('lottery')">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="fa-solid fa-trophy fs-4 text-warning"></i>
+                                    <div>
+                                        <div class="fw-bold small text-white">Lottery $2.5M Winner</div>
+                                        <div class="text-danger small fw-semibold" style="font-size: 0.74rem;">🚨 419 Advance Scam</div>
+                                    </div>
+                                </div>
+                                <span class="badge bg-danger-subtle text-danger font-mono" style="font-size: 0.7rem;">92% Score</span>
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="sim-btn sim-btn-github d-flex justify-content-between align-items-center" onclick="runSimulation('github_digest')">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="fa-brands fa-github fs-4 text-white"></i>
+                                    <div>
+                                        <div class="fw-bold small text-white">GitHub Weekly Digest</div>
+                                        <div class="text-success small fw-semibold" style="font-size: 0.74rem;">🛡️ Legitimate Digest</div>
+                                    </div>
+                                </div>
+                                <span class="badge bg-success-subtle text-success font-mono" style="font-size: 0.7rem;">Clean 0%</span>
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="sim-btn sim-btn-zoom d-flex justify-content-between align-items-center" onclick="runSimulation('zoom_invite')">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="fa-solid fa-video fs-4 text-primary"></i>
+                                    <div>
+                                        <div class="fw-bold small text-white">Zoom Meeting Invite</div>
+                                        <div class="text-success small fw-semibold" style="font-size: 0.74rem;">🛡️ Calendar Invite</div>
+                                    </div>
+                                </div>
+                                <span class="badge bg-success-subtle text-success font-mono" style="font-size: 0.7rem;">Clean 0%</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="simFeedback" class="small p-2 rounded-3 d-none font-mono"></div>
+                </div>
+
+                <!-- TAB 2: Manual Email Analyzer -->
+                <div class="tab-pane fade" id="tab-custom" role="tabpanel">
+                    <form id="manualScanForm" class="row g-3">
+                        <div class="col-md-5">
+                            <label class="form-label text-white small fw-bold">Sender Email Address</label>
+                            <input type="text" id="manualSender" class="form-control" placeholder="e.g. security-team@paypal-notice.com" required>
+                        </div>
+                        <div class="col-md-7">
+                            <label class="form-label text-white small fw-bold">Email Subject Line</label>
+                            <input type="text" id="manualSubject" class="form-control" placeholder="e.g. URGENT: Confirm your credentials within 24 hours" required>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label text-white small fw-bold">Email Body Content</label>
+                            <textarea id="manualBody" class="form-control" rows="3" placeholder="Paste full email body or suspicious message here..." required></textarea>
+                        </div>
+                        <div class="col-12 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                            <span class="text-sub-high small fw-medium">
+                                <i class="fa-solid fa-microchip text-warning me-1"></i> Evaluated via fine-tuned BERT Transformer + Heuristic URL Matrix
+                            </span>
+                            <button type="submit" class="btn btn-liquid-primary" id="btnManualSubmit">
+                                <i class="fa-solid fa-brain me-1"></i> Analyze with BERT AI
+                            </button>
+                        </div>
+                    </form>
+                    <div id="manualResultBox" class="mt-3 p-3 rounded-3 d-none"></div>
+                </div>
+
+                <!-- TAB 3: Standalone URL Sandbox -->
+                <div class="tab-pane fade" id="tab-url" role="tabpanel">
+                    <form id="urlScanForm" class="row g-2 align-items-center">
+                        <div class="col-md-9">
+                            <input type="url" id="inputUrlTarget" class="form-control" placeholder="Paste link (e.g. https://login.secure-bank.cf/verify)" required>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-liquid-primary w-100" id="btnUrlSubmit">
+                                <i class="fa-solid fa-shield-virus me-1"></i> Inspect URL
+                            </button>
+                        </div>
+                    </form>
+                    <div id="urlResultBox" class="mt-3 p-3 rounded-3 d-none"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEARCH, FILTERS & LIVE FEED CONTROLS -->
+        <div class="liquid-glass-card p-4 mb-4 animate-reveal-4">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+                <!-- Filter Pills -->
+                <div class="d-flex flex-wrap gap-2 align-items-center" id="quickFilterPills">
+                    <a href="{{ url_for('scan_history', search=search) }}" class="liquid-pill {% if filter_phish == 'all' or not filter_phish %}active{% endif %}">
+                        <i class="fa-solid fa-layer-group"></i> All ({{ total_scans }})
+                    </a>
+                    <a href="{{ url_for('scan_history', filter_phish='phishing', search=search) }}" class="liquid-pill threat-pill {% if filter_phish == 'phishing' %}active{% endif %}">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Threats ({{ phishing_count }})
+                    </a>
+                    <a href="{{ url_for('scan_history', filter_phish='safe', search=search) }}" class="liquid-pill safe-pill {% if filter_phish == 'safe' %}active{% endif %}">
+                        <i class="fa-solid fa-circle-check"></i> Safe ({{ safe_count }})
+                    </a>
+                    <a href="{{ url_for('scan_history', filter_phish='critical', search=search) }}" class="liquid-pill threat-pill {% if filter_phish == 'critical' %}active{% endif %}">
+                        <i class="fa-solid fa-fire"></i> Critical (75%+)
+                    </a>
+                    <a href="{{ url_for('scan_history', filter_phish='suspicious', search=search) }}" class="liquid-pill {% if filter_phish == 'suspicious' %}active{% endif %}">
+                        <i class="fa-solid fa-eye"></i> Suspicious (50-74%)
+                    </a>
+                </div>
+
+                <!-- Export & Live Actions -->
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                    <div class="form-check form-switch me-1" title="Real-time live synchronization toggle">
+                        <input class="form-check-input" type="checkbox" id="liveSyncToggle" checked>
+                        <label class="form-check-label small text-white font-mono fw-semibold" for="liveSyncToggle">Live Sync (4s)</label>
+                    </div>
+                    <a href="{{ url_for('export_csv') }}" class="btn btn-sm btn-liquid-glass" title="Export audit trail as CSV">
+                        <i class="fa-solid fa-file-csv text-success me-1"></i> CSV
+                    </a>
+                    <a href="{{ url_for('export_json') }}" class="btn btn-sm btn-liquid-glass" title="Export audit trail as JSON">
+                        <i class="fa-solid fa-code text-info me-1"></i> JSON
+                    </a>
+                    <button class="btn btn-sm btn-liquid-glass" onclick="window.print()" title="Print security report">
+                        <i class="fa-solid fa-print me-1"></i> Print
+                    </button>
+                </div>
+            </div>
+
+            <!-- SEARCH FORM WITH REAL-TIME TYPING FILTER + SUBMIT BUTTON -->
+            <form method="get" action="{{ url_for('scan_history') }}" id="searchFilterForm" class="row g-2 align-items-center">
+                <input type="hidden" name="filter_phish" value="{{ filter_phish }}">
+                <input type="hidden" name="since" value="{{ since }}">
+
+                <div class="col-md-7">
+                    <div class="liquid-search-box">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="liveSearchInput" name="search" class="form-control" 
+                               placeholder="Search by sender, subject, keywords (e.g. PayPal, invoice, urgent)..." 
+                               value="{{ search }}" autocomplete="off">
+                        <button type="button" class="search-clear-btn" id="searchClearBtn" title="Clear search">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <select name="since" class="form-select" id="timeFilterSelect" onchange="document.getElementById('searchFilterForm').submit()">
+                        <option value="" {% if not since %}selected{% endif %}>All Time Range</option>
+                        <option value="1hr" {% if since == '1hr' %}selected{% endif %}>Last 1 Hour</option>
+                        <option value="24hr" {% if since == '24hr' %}selected{% endif %}>Last 24 Hours</option>
+                        <option value="7day" {% if since == '7day' %}selected{% endif %}>Last 7 Days</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-liquid-primary w-100" id="btnSubmitSearch">
+                        <i class="fa-solid fa-magnifying-glass me-1"></i> Search
+                    </button>
+                </div>
+            </form>
+
+            <div class="d-flex justify-content-between align-items-center mt-2 small text-sub-high">
+                <span id="searchResultStats">
+                    {% if search %}
+                    Found matching results for "<strong class="text-warning">{{ search }}</strong>" • <a href="{{ url_for('scan_history', filter_phish=filter_phish, since=since) }}" class="text-info text-decoration-none fw-semibold">Reset Search</a>
+                    {% else %}
+                    Showing latest scan records • Real-time client filter active
+                    {% endif %}
+                </span>
+                <span class="font-mono text-white fw-semibold" id="liveSyncStatus"><i class="fa-solid fa-circle text-success me-1" style="font-size: 8px;"></i> Live updates connected</span>
+            </div>
+
+            {% if deleted_id %}
+            <div class="alert alert-warning mt-3 mb-0 d-flex justify-content-between align-items-center rounded-3">
+                <span class="fw-bold">Record #{{ deleted_id }} soft-deleted.</span>
+                <form method="post" action="{{ url_for('undo_delete', scan_id=deleted_id) }}" style="display:inline;">
+                    <button type="submit" class="btn btn-sm btn-warning rounded-pill px-3 fw-bold">Undo Delete</button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- SCAN AUDIT TRAIL TABLE (LIQUID GLASS + MAXIMUM READABILITY) -->
+        <div class="liquid-glass-card p-4 animate-reveal-5 shimmer-beam">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <div>
+                    <span class="badge bg-secondary-subtle text-white font-mono small fw-bold">Real-Time Ledger</span>
+                    <h5 class="fw-bold text-white mb-0 font-heading">
+                        <i class="fa-solid fa-table-list text-warning me-2"></i> Email Threat Audit Log
+                    </h5>
+                </div>
+                <div class="text-white small font-mono fw-bold" id="tableRecordCount">
+                    Page {{ records.page }} of {{ records.pages or 1 }} ({{ total_scans }} total)
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table-liquid" id="auditTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">Sender</th>
+                            <th style="width: 32%;">Subject & Analysis Snippet</th>
+                            <th style="width: 16%;">Threat Score</th>
+                            <th style="width: 15%;">Verdict</th>
+                            <th style="width: 12%; text-align: right;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="auditTableBody">
+                        {% if records.items %}
+                            {% for record in records.items %}
+                            <tr id="row-{{ record.id }}" data-id="{{ record.id }}" data-sender="{{ record.sender | lower }}" data-subject="{{ record.subject | lower }}">
+                                <td>
+                                    <div class="fw-bold text-white text-truncate" style="max-width: 250px; font-size: 0.96rem;" title="{{ record.sender }}">
+                                        {{ record.sender or 'Unknown' }}
+                                    </div>
+                                    <div class="text-sub-high small font-mono fw-semibold" style="font-size: 0.74rem;">
+                                        ID #{{ record.id }} • {{ record.scanned_at.strftime('%Y-%m-%d %H:%M') if record.scanned_at else '' }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="text-truncate fw-semibold text-white subject-col" style="max-width: 320px; font-size: 0.95rem;" title="{{ record.subject }}">
+                                        {{ record.subject or '(No Subject)' }}
+                                    </div>
+                                    {% if record.recommendations %}
+                                    <small class="text-sub-high d-block text-truncate fw-medium" style="max-width: 320px;">
+                                        {{ record.recommendations.split('\n')[0] }}
+                                    </small>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-between align-items-center small mb-1 font-mono">
+                                        <span class="fw-bold {% if (record.threat_score or 0) >= 50 %}text-danger{% else %}text-success{% endif %}" style="font-size: 1.05rem;">
+                                            {{ record.threat_score or 0 }}%
+                                        </span>
+                                        <span class="fw-bold text-sub-high" style="font-size: 0.75rem;">
+                                            {% if (record.threat_score or 0) >= 75 %}CRITICAL{% elif (record.threat_score or 0) >= 50 %}HIGH{% elif (record.threat_score or 0) >= 25 %}MEDIUM{% else %}SAFE{% endif %}
+                                        </span>
+                                    </div>
+                                    <div class="threat-meter-bg">
+                                        <div class="threat-meter-fill" style="width: {{ record.threat_score or 0 }}%; background-color: {% if (record.threat_score or 0) >= 50 %}#f43f5e{% else %}#10b981{% endif %};"></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    {% if record.is_phishing or (record.threat_score and record.threat_score >= 50) %}
+                                        <span class="badge-threat-critical">
+                                            <i class="fa-solid fa-triangle-exclamation"></i> PHISHING
+                                        </span>
+                                    {% else %}
+                                        <span class="badge-safe">
+                                            <i class="fa-solid fa-circle-check"></i> VERIFIED SAFE
+                                        </span>
+                                    {% endif %}
+                                </td>
+                                <td style="text-align: right;">
+                                    <div class="d-flex justify-content-end gap-1">
+                                        <button class="btn btn-sm btn-liquid-glass py-1 px-2" onclick="inspectRecord({{ record.id }})" title="View detailed deep analysis report">
+                                            <i class="fa-solid fa-magnifying-glass text-info"></i>
+                                        </button>
+                                        <form method="post" action="{{ url_for('delete_scan', scan_id=record.id) }}" style="display:inline;" onsubmit="return confirm('Delete this scan record?');">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger py-1 px-2 rounded-circle" title="Delete record">
+                                                <i class="fa-solid fa-trash-can"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr id="noRecordsRow">
+                                <td colspan="5" class="text-center py-5 text-white">
+                                    <i class="fa-solid fa-inbox fs-1 mb-2 d-block text-warning opacity-75"></i>
+                                    No scan records found matching the active filter or search.
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination Bar -->
+            {% if records.pages and records.pages > 1 %}
+            <nav class="mt-4">
+                <ul class="pagination justify-content-center flex-wrap gap-1">
+                    {% if records.has_prev %}
+                    <li class="page-item">
+                        <a class="page-link rounded-pill px-3 me-1 btn-liquid-glass" 
+                           href="{{ url_for('scan_history', page=records.prev_num, search=search, filter_phish=filter_phish, since=since) }}">
+                            &laquo; Previous
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% for p in records.iter_pages(left_edge=2, right_edge=2, left_current=2, right_current=2) %}
+                        {% if p %}
+                            <li class="page-item {% if p == records.page %}active{% endif %}">
+                                <a class="page-link rounded-pill px-3 {% if p == records.page %}btn-liquid-primary{% else %}btn-liquid-glass{% endif %}" 
+                                   href="{{ url_for('scan_history', page=p, search=search, filter_phish=filter_phish, since=since) }}">
+                                    {{ p }}
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled"><span class="page-link rounded-pill px-2 btn-liquid-glass text-muted">…</span></li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if records.has_next %}
+                    <li class="page-item">
+                        <a class="page-link rounded-pill px-3 ms-1 btn-liquid-glass" 
+                           href="{{ url_for('scan_history', page=records.next_num, search=search, filter_phish=filter_phish, since=since) }}">
+                            Next &raquo;
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <!-- DEEP THREAT INSPECTION MODAL -->
+    <div class="modal fade" id="inspectModal" tabindex="-1" aria-labelledby="inspectModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content liquid-glass-card p-3">
+                <div class="modal-header border-0 pb-0">
+                    <div>
+                        <span class="badge bg-primary-subtle text-cyan font-mono small fw-bold">AI Threat Intelligence Report</span>
+                        <h4 class="modal-title fw-bold text-white font-heading mt-1" id="inspectModalLabel">
+                            <i class="fa-solid fa-shield-virus text-warning me-2"></i> Threat Analysis Audit
+                        </h4>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-3">
+                    <div id="inspectLoading" class="text-center py-4">
+                        <i class="fa-solid fa-spinner fa-spin fs-2 text-info mb-2"></i>
+                        <p class="text-white small">Loading inspection intelligence...</p>
+                    </div>
+                    <div id="inspectContent" class="d-none">
+                        <!-- Score banner -->
+                        <div class="d-flex justify-content-between align-items-center p-3 rounded-4 mb-3" id="inspectScoreBanner">
+                            <div>
+                                <span class="small text-uppercase font-mono text-white fw-bold">Overall Risk Evaluation</span>
+                                <h3 class="mb-0 fw-bold font-heading text-white" id="inspectVerdictTitle">High Risk</h3>
+                            </div>
+                            <div class="text-end">
+                                <div class="fs-2 fw-bold font-mono text-white" id="inspectScoreVal">89.5%</div>
+                                <span class="badge" id="inspectThreatBadge">THREAT</span>
+                            </div>
+                        </div>
+
+                        <!-- Email Metadata -->
+                        <div class="liquid-glass-card p-3 mb-3">
+                            <div class="row g-2 small">
+                                <div class="col-12">
+                                    <strong class="text-sub-high">Sender:</strong> 
+                                    <span class="text-white fw-bold font-mono" id="inspectSender"></span>
+                                </div>
+                                <div class="col-12">
+                                    <strong class="text-sub-high">Subject:</strong> 
+                                    <span class="text-white fw-semibold" id="inspectSubject"></span>
+                                </div>
+                                <div class="col-12">
+                                    <strong class="text-sub-high">Scanned At:</strong> 
+                                    <span class="text-white font-mono" id="inspectDate"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recommendations -->
+                        <div class="liquid-glass-card p-3 mb-3">
+                            <h6 class="fw-bold text-white mb-2">
+                                <i class="fa-solid fa-list-check text-warning me-2"></i> Actionable Security Recommendations
+                            </h6>
+                            <ul class="mb-0 ps-3 small text-white" id="inspectRecommendationsList"></ul>
+                        </div>
+
+                        <!-- Export / Copy Buttons -->
+                        <div class="d-flex justify-content-end gap-2">
+                            <button class="btn btn-sm btn-liquid-glass" onclick="copyInspectionReport()">
+                                <i class="fa-regular fa-copy me-1"></i> Copy Audit Summary
+                            </button>
+                            <button class="btn btn-sm btn-liquid-primary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONNECT EMAIL CONFIGURATION MODAL -->
+    <div class="modal fade" id="connectModal" tabindex="-1" aria-labelledby="connectModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content liquid-glass-card p-3">
+                <div class="modal-header border-0 pb-0">
+                    <div>
+                        <span class="badge bg-primary-subtle text-cyan font-mono small fw-bold">Universal Mail Connector</span>
+                        <h4 class="modal-title fw-bold text-white font-heading mt-1" id="connectModalLabel">
+                            <i class="fa-solid fa-envelope-circle-check text-warning me-2"></i> Email Radar Settings & Connection
+                        </h4>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div id="connectAlertBox" class="alert d-none mb-3"></div>
+
+                    <form id="connectEmailForm" class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label text-white small fw-bold">Email Provider</label>
+                            <select id="selectProvider" class="form-select">
+                                <option value="gmail" selected>Google Gmail (IMAP)</option>
+                                <option value="outlook">Microsoft Outlook / Office 365</option>
+                                <option value="yahoo">Yahoo Mail</option>
+                                <option value="icloud">Apple iCloud Mail</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-white small fw-bold">Email Address</label>
+                            <input type="email" id="inputEmailAcc" class="form-control" placeholder="yourname@gmail.com" value="gajiayan404@gmail.com" required>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label text-white small fw-bold">
+                                16-Character App Password
+                                <span class="badge bg-warning text-dark ms-1">Required</span>
+                            </label>
+                            <div class="input-group">
+                                <input type="password" id="inputAppPassword" class="form-control font-mono" placeholder="16 letters without spaces (e.g. ingmvspbkzmlfghm)" required>
+                                <button class="btn btn-outline-secondary" type="button" id="btnTogglePwd">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+                            </div>
+                            <small class="text-sub-high d-block mt-1">
+                                For Gmail: Go to <a href="https://myaccount.google.com/apppasswords" target="_blank" class="text-info fw-bold">Google Account > Security > App Passwords</a> to generate a dedicated 16-character code.
+                            </small>
+                        </div>
+
+                        <div class="col-12 d-flex justify-content-between align-items-center mt-3">
+                            <button type="button" class="btn btn-liquid-danger" id="btnStopScanner">
+                                <i class="fa-solid fa-stop me-1"></i> Stop Auto-Scan
+                            </button>
+                            <div class="d-flex gap-2">
+                                <button type="button" class="btn btn-liquid-glass" id="btnStartScanner">
+                                    <i class="fa-solid fa-play me-1 text-success"></i> Start 1-Min Auto-Scan
+                                </button>
+                                <button type="submit" class="btn btn-liquid-primary" id="btnConnectEmail">
+                                    <i class="fa-solid fa-plug me-1"></i> Save & Test Mailbox
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <hr class="border-secondary my-4">
+
+                    <!-- Notification & Audio Settings inside Modal -->
+                    <h6 class="fw-bold text-white mb-2"><i class="fa-solid fa-sliders text-warning me-2"></i> Alert Testing Hub</h6>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <button class="btn btn-sm btn-liquid-glass" onclick="playThreatAlarm()">
+                            <i class="fa-solid fa-volume-high text-danger me-1"></i> Test Phishing Siren Sound
+                        </button>
+                        <button class="btn btn-sm btn-liquid-glass" onclick="playSafeChime()">
+                            <i class="fa-solid fa-bell text-success me-1"></i> Test Clean Chime Sound
+                        </button>
+                        <button class="btn btn-sm btn-liquid-glass" onclick="triggerTestDesktopNotif()">
+                            <i class="fa-solid fa-desktop text-info me-1"></i> Test Windows Desktop Alert
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        /* =========================================================
+           NEXT-GEN AUDIO SYNTHESIZER (WEB AUDIO API - ZERO ASSETS)
+           ========================================================= */
+        let audioCtx = null;
+        let soundEnabled = true;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioContextClass) {
+                    audioCtx = new AudioContextClass();
+                }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        function playThreatAlarm() {
+            if (!soundEnabled) return;
+            try {
+                const ctx = getAudioContext();
+                if (!ctx) return;
+                const now = ctx.currentTime;
+
+                const osc1 = ctx.createOscillator();
+                const osc2 = ctx.createOscillator();
+                const gain = ctx.createGain();
+
+                osc1.type = 'sawtooth';
+                osc2.type = 'square';
+
+                osc1.frequency.setValueAtTime(880, now);
+                osc1.frequency.linearRampToValueAtTime(659, now + 0.15);
+                osc1.frequency.linearRampToValueAtTime(880, now + 0.3);
+                osc1.frequency.linearRampToValueAtTime(659, now + 0.45);
+                osc1.frequency.linearRampToValueAtTime(880, now + 0.6);
+
+                osc2.frequency.setValueAtTime(440, now);
+                osc2.frequency.linearRampToValueAtTime(330, now + 0.3);
+                osc2.frequency.linearRampToValueAtTime(440, now + 0.6);
+
+                gain.gain.setValueAtTime(0.28, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.7);
+
+                osc1.connect(gain);
+                osc2.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc1.start(now);
+                osc2.start(now);
+                osc1.stop(now + 0.75);
+                osc2.stop(now + 0.75);
+            } catch (e) {
+                console.error("Audio error:", e);
+            }
+        }
+
+        function playSafeChime() {
+            if (!soundEnabled) return;
+            try {
+                const ctx = getAudioContext();
+                if (!ctx) return;
+                const now = ctx.currentTime;
+
+                [523.25, 659.25, 783.99].forEach((freq, idx) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, now + (idx * 0.08));
+                    gain.gain.setValueAtTime(0.2, now + (idx * 0.08));
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6 + (idx * 0.08));
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now + (idx * 0.08));
+                    osc.stop(now + 0.7 + (idx * 0.08));
+                });
+            } catch (e) {
+                console.error("Audio error:", e);
+            }
+        }
+
+        document.getElementById('btnToggleSound').addEventListener('click', () => {
+            soundEnabled = !soundEnabled;
+            const waveBars = document.getElementById('soundWaveBars');
+            const label = document.getElementById('soundLabel');
+            if (soundEnabled) {
+                if (waveBars) waveBars.classList.remove('paused');
+                label.innerText = 'Sound On';
+                playSafeChime();
+            } else {
+                if (waveBars) waveBars.classList.add('paused');
+                label.innerText = 'Muted';
+            }
+        });
+
+        /* =========================================================
+           BROWSER DESKTOP NOTIFICATIONS (HTML5 WEB NOTIFICATION API)
+           ========================================================= */
+        const notifBtn = document.getElementById('btnRequestNotification');
+        const notifLabel = document.getElementById('notifBtnLabel');
+
+        function updateNotifBtnState() {
+            if (!('Notification' in window)) {
+                notifBtn.classList.add('d-none');
+                return;
+            }
+            if (Notification.permission === 'granted') {
+                notifLabel.innerText = 'Alerts Active';
+                notifBtn.querySelector('i').className = 'fa-solid fa-bell text-success me-1';
+            } else if (Notification.permission === 'denied') {
+                notifLabel.innerText = 'Alerts Blocked';
+                notifBtn.querySelector('i').className = 'fa-solid fa-bell-slash text-danger me-1';
+            } else {
+                notifLabel.innerText = 'Enable Desktop Alerts';
+                notifBtn.querySelector('i').className = 'fa-solid fa-bell text-warning me-1';
+            }
+        }
+        updateNotifBtnState();
+
+        notifBtn.addEventListener('click', async () => {
+            if (!('Notification' in window)) {
+                alert('Your browser does not support desktop notifications.');
+                return;
+            }
+            try {
+                const perm = await Notification.requestPermission();
+                updateNotifBtnState();
+                if (perm === 'granted') {
+                    showDesktopNotification(
+                        '🛡️ PhishShield AI Protection Active',
+                        'Real-time phishing alerts and threat notifications are now active on your desktop!'
+                    );
+                    showToast('Desktop Notifications Enabled!', 'You will now receive instant popups when incoming threats are detected.', false);
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        });
+
+        function showDesktopNotification(title, body) {
+            if ('Notification' in window && Notification.permission === 'granted') {
+                try {
+                    new Notification(title, {
+                        body: body,
+                        icon: 'https://cdn-icons-png.flaticon.com/512/9422/9422998.png',
+                        tag: 'phishshield-alert'
+                    });
+                } catch (e) {
+                    console.log("Desktop notif err:", e);
+                }
+            }
+        }
+
+        function triggerTestDesktopNotif() {
+            if (Notification.permission !== 'granted') {
+                Notification.requestPermission().then(p => {
+                    updateNotifBtnState();
+                    if (p === 'granted') {
+                        showDesktopNotification('🚨 TEST ALERT: Phishing Detected!', 'Sender: scam@paypal-alert.tk\nThreat Score: 95.8% (Critical)');
+                    }
+                });
+            } else {
+                showDesktopNotification('🚨 TEST ALERT: Phishing Detected!', 'Sender: scam@paypal-alert.tk\nThreat Score: 95.8% (Critical)');
+            }
+        }
+
+        /* =========================================================
+           FLOATING GLASS TOAST NOTIFICATION ENGINE
+           ========================================================= */
+        function showToast(title, message, isThreat = false, recordId = null) {
+            const container = document.getElementById('cyberToastContainer');
+            const toast = document.createElement('div');
+            toast.className = `cyber-toast ${isThreat ? 'threat' : ''}`;
+            
+            toast.innerHTML = `
+                <div class="d-flex align-items-start gap-3">
+                    <div class="fs-3 ${isThreat ? 'text-danger' : 'text-success'}">
+                        <i class="fa-solid ${isThreat ? 'fa-triangle-exclamation' : 'fa-circle-check'}"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <div class="d-flex align-items-center justify-content-between mb-1">
+                            <strong class="${isThreat ? 'text-danger' : 'text-white'} font-heading">${title}</strong>
+                            <small class="text-sub-high font-mono" style="font-size: 0.72rem;">Just now</small>
+                        </div>
+                        <p class="mb-2 small text-white fw-medium" style="line-height: 1.35;">${message}</p>
+                        ${recordId ? `<button class="btn btn-xs btn-liquid-primary py-1 px-3 font-mono" style="font-size: 0.75rem;" onclick="inspectRecord(${recordId})"><i class="fa-solid fa-magnifying-glass me-1"></i> Inspect Threat</button>` : ''}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" style="font-size: 0.75rem;" onclick="this.closest('.cyber-toast').remove()"></button>
+                </div>
+            `;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                if (toast && toast.parentNode) {
+                    toast.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(100%)';
+                    setTimeout(() => toast.remove(), 400);
+                }
+            }, 8000);
+        }
+
+        /* =========================================================
+           WORKING REAL-TIME LIVE SEARCH & TYPING FILTER
+           ========================================================= */
+        const liveSearchInput = document.getElementById('liveSearchInput');
+        const searchClearBtn = document.getElementById('searchClearBtn');
+        const auditTableBody = document.getElementById('auditTableBody');
+
+        function performClientSearch() {
+            const query = liveSearchInput.value.trim().toLowerCase();
+            if (query.length > 0) {
+                searchClearBtn.style.display = 'block';
+            } else {
+                searchClearBtn.style.display = 'none';
+            }
+
+            const rows = auditTableBody.querySelectorAll('tr[data-id]');
+            let matchCount = 0;
+
+            rows.forEach(row => {
+                const sender = row.getAttribute('data-sender') || '';
+                const subject = row.getAttribute('data-subject') || '';
+                const text = row.innerText.toLowerCase();
+
+                if (!query || sender.includes(query) || subject.includes(query) || text.includes(query)) {
+                    row.style.display = '';
+                    matchCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            const statSpan = document.getElementById('searchResultStats');
+            if (query) {
+                statSpan.innerHTML = `Found <strong class="text-warning">${matchCount}</strong> matching emails for "${query}". (Press Enter or click Search for global database query)`;
+            } else {
+                statSpan.innerHTML = 'Showing latest scan records • Real-time client filter active';
+            }
+        }
+
+        liveSearchInput.addEventListener('input', performClientSearch);
+
+        searchClearBtn.addEventListener('click', () => {
+            liveSearchInput.value = '';
+            performClientSearch();
+            liveSearchInput.focus();
+        });
+
+        /* =========================================================
+           1-CLICK ATTACK SIMULATION RUNNER
+           ========================================================= */
+        async function runSimulation(scenario) {
+            const feedback = document.getElementById('simFeedback');
+            feedback.classList.remove('d-none');
+            feedback.className = 'small p-2 rounded-3 alert alert-info font-mono fw-bold';
+            feedback.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-1"></i> Running BERT AI neural scan simulation...';
+
+            try {
+                const res = await fetch('/api/simulate-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ scenario: scenario })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    feedback.className = 'small p-2 rounded-3 alert alert-success font-mono fw-bold';
+                    feedback.innerHTML = `<strong>${data.message}</strong> (${data.record.sender}) - Added to audit log!`;
+
+                    if (data.analysis.is_phishing) {
+                        playThreatAlarm();
+                        showDesktopNotification(
+                            '🚨 PHISHING THREAT DETECTED!',
+                            `Threat Score: ${data.analysis.threat_score}%\nFrom: ${data.record.sender}\nSubject: ${data.record.subject}`
+                        );
+                        showToast(
+                            `🚨 Phishing Detected: ${data.analysis.threat_score}%`,
+                            `Intercepted email from <strong>${data.record.sender}</strong>: "${data.record.subject}"`,
+                            true,
+                            data.record.id
+                        );
+                    } else {
+                        playSafeChime();
+                        showToast(
+                            '🛡️ Verified Clean Email',
+                            `Scanned: "${data.record.subject}" from ${data.record.sender}`,
+                            false,
+                            data.record.id
+                        );
+                    }
+
+                    prependRowToTable(data.record);
+                    updateCounters(data.analysis.is_phishing);
+                } else {
+                    feedback.className = 'small p-2 rounded-3 alert alert-danger font-mono';
+                    feedback.innerHTML = `Simulation error: ${data.error || 'Unknown'}`;
+                }
+            } catch (err) {
+                feedback.className = 'small p-2 rounded-3 alert alert-danger font-mono';
+                feedback.innerHTML = `Network error: ${err.message}`;
+            }
+        }
+
+        /* =========================================================
+           REAL-TIME INBOX SYNCHRONIZATION ENGINE
+           ========================================================= */
+        let currentLatestId = {{ latest_id or 0 }};
+        const liveSyncToggle = document.getElementById('liveSyncToggle');
+
+        function prependRowToTable(rec) {
+            if (document.getElementById(`row-${rec.id}`)) return;
+
+            const emptyRow = document.getElementById('noRecordsRow');
+            if (emptyRow) emptyRow.remove();
+
+            const tr = document.createElement('tr');
+            tr.id = `row-${rec.id}`;
+            tr.setAttribute('data-id', rec.id);
+            tr.setAttribute('data-sender', (rec.sender || '').toLowerCase());
+            tr.setAttribute('data-subject', (rec.subject || '').toLowerCase());
+            tr.className = 'row-inserted';
+
+            const isPhish = rec.is_phishing || rec.threat_score >= 50;
+
+            tr.innerHTML = `
+                <td>
+                    <div class="fw-bold text-white text-truncate" style="max-width: 250px; font-size: 0.96rem;" title="${rec.sender}">
+                        ${rec.sender || 'Unknown'}
+                    </div>
+                    <div class="text-sub-high small font-mono fw-semibold" style="font-size: 0.74rem;">
+                        ID #${rec.id} • ${rec.scanned_at}
+                    </div>
+                </td>
+                <td>
+                    <div class="text-truncate fw-semibold text-white subject-col" style="max-width: 320px; font-size: 0.95rem;" title="${rec.subject}">
+                        ${rec.subject || '(No Subject)'}
+                    </div>
+                    ${rec.recommendations_list && rec.recommendations_list.length > 0 ? `<small class="text-sub-high d-block text-truncate fw-medium" style="max-width: 320px;">${rec.recommendations_list[0]}</small>` : ''}
+                </td>
+                <td>
+                    <div class="d-flex justify-content-between align-items-center small mb-1 font-mono">
+                        <span class="fw-bold ${isPhish ? 'text-danger' : 'text-success'}" style="font-size: 1.05rem;">
+                            ${rec.threat_score}%
+                        </span>
+                        <span class="fw-bold text-sub-high" style="font-size: 0.75rem;">${rec.threat_level || (isPhish ? 'CRITICAL' : 'SAFE')}</span>
+                    </div>
+                    <div class="threat-meter-bg">
+                        <div class="threat-meter-fill" style="width: ${rec.threat_score}%; background-color: ${isPhish ? '#f43f5e' : '#10b981'};"></div>
+                    </div>
+                </td>
+                <td>
+                    ${isPhish ? `
+                        <span class="badge-threat-critical">
+                            <i class="fa-solid fa-triangle-exclamation"></i> PHISHING
+                        </span>
+                    ` : `
+                        <span class="badge-safe">
+                            <i class="fa-solid fa-circle-check"></i> VERIFIED SAFE
+                        </span>
+                    `}
+                </td>
+                <td style="text-align: right;">
+                    <div class="d-flex justify-content-end gap-1">
+                        <button class="btn btn-sm btn-liquid-glass py-1 px-2" onclick="inspectRecord(${rec.id})" title="View detailed deep analysis report">
+                            <i class="fa-solid fa-magnifying-glass text-info"></i>
+                        </button>
+                        <form method="post" action="/delete/${rec.id}" style="display:inline;" onsubmit="return confirm('Delete this scan record?');">
+                            <button type="submit" class="btn btn-sm btn-outline-danger py-1 px-2 rounded-circle" title="Delete record">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            `;
+
+            auditTableBody.prepend(tr);
+            if (rec.id > currentLatestId) {
+                currentLatestId = rec.id;
+            }
+        }
+
+        /* =========================================================
+           PROFESSIONAL FLUID ANIMATION ENGINE (COUNTERS & BARS)
+           ========================================================= */
+        function animateCounter(elementId, targetValue, duration = 1200, isPercentage = false) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+
+            // Flash glowing accent on value change
+            el.classList.remove('counter-glow');
+            void el.offsetWidth;
+            el.classList.add('counter-glow');
+
+            const currentText = el.innerText.replace('%', '').trim();
+            const startVal = parseFloat(currentText) || 0;
+            const finalVal = parseFloat(targetValue) || 0;
+            const isFloat = String(targetValue).includes('.');
+            const startTime = performance.now();
+
+            function updateCount(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                // Apple-grade ease-out cubic curve
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                const currentVal = startVal + (finalVal - startVal) * easeOut;
+
+                if (isFloat || isPercentage) {
+                    el.innerText = currentVal.toFixed(1) + (isPercentage ? '%' : '');
+                } else {
+                    el.innerText = Math.round(currentVal);
+                }
+
+                if (progress < 1) {
+                    requestAnimationFrame(updateCount);
+                } else {
+                    el.innerText = isFloat ? finalVal.toFixed(1) + (isPercentage ? '%' : '') : (Math.round(finalVal) + (isPercentage ? '%' : ''));
+                }
+            }
+            requestAnimationFrame(updateCount);
+        }
+
+        function animateProgressBar(elementId, targetWidth, duration = 1100) {
+            const bar = document.getElementById(elementId);
+            if (!bar) return;
+            bar.style.width = '0%';
+            setTimeout(() => {
+                bar.style.transition = `width ${duration}ms cubic-bezier(0.16, 1, 0.3, 1)`;
+                bar.style.width = `${targetWidth}%`;
+            }, 100);
+        }
+
+        function updateCounters(isThreat) {
+            const totalEl = document.getElementById('statTotalScans');
+            const threatEl = document.getElementById('statThreatCount');
+            const safeEl = document.getElementById('statSafeCount');
+            const healthEl = document.getElementById('statHealthIndex');
+
+            let total = parseInt(totalEl.innerText) || 0;
+            let threats = parseInt(threatEl.innerText) || 0;
+            let safe = parseInt(safeEl.innerText) || 0;
+
+            total += 1;
+            if (isThreat) threats += 1;
+            else safe += 1;
+
+            animateCounter('statTotalScans', total, 800);
+            animateCounter('statThreatCount', threats, 800);
+            animateCounter('statSafeCount', safe, 800);
+
+            const ratio = ((safe / total) * 100).toFixed(1);
+            animateCounter('statHealthIndex', parseFloat(ratio), 800, true);
+
+            // Animate progress bar widths smoothly
+            const phishRatio = ((threats / total) * 100).toFixed(1);
+            const threatBar = document.getElementById('statThreatBar');
+            const safeBar = document.getElementById('statSafeBar');
+            const healthBar = document.getElementById('statHealthBar');
+            if (threatBar) threatBar.style.width = phishRatio + '%';
+            if (safeBar) safeBar.style.width = ratio + '%';
+            if (healthBar) healthBar.style.width = ratio + '%';
+        }
+
+        async function syncLiveFeed() {
+            if (!liveSyncToggle || !liveSyncToggle.checked) return;
+
+            try {
+                const res = await fetch(`/api/records-live?last_id=${currentLatestId}`);
+                if (!res.ok) return;
+                const data = await res.json();
+
+                if (data.success && data.new_items && data.new_items.length > 0) {
+                    data.new_items.reverse().forEach(rec => {
+                        prependRowToTable(rec);
+                        if (rec.is_phishing || rec.threat_score >= 50) {
+                            playThreatAlarm();
+                            showDesktopNotification(
+                                '🚨 PHISHING ALERT DETECTED IN INBOX!',
+                                `Threat Score: ${rec.threat_score}%\nFrom: ${rec.sender}\nSubject: ${rec.subject}`
+                            );
+                            showToast(
+                                `🚨 Phishing Detected: ${rec.threat_score}%`,
+                                `From: ${rec.sender}<br>Subject: ${rec.subject}`,
+                                true,
+                                rec.id
+                            );
+                        } else {
+                            playSafeChime();
+                            showToast('🛡️ Clean Email Verified', `Subject: ${rec.subject}`, false, rec.id);
+                        }
+                    });
+
+                    if (data.total_scans !== undefined) {
+                        animateCounter('statTotalScans', data.total_scans, 800);
+                        animateCounter('statThreatCount', data.phishing_count, 800);
+                        animateCounter('statSafeCount', data.safe_count, 800);
+                        if (data.total_scans > 0) {
+                            const ratio = ((data.safe_count / data.total_scans) * 100).toFixed(1);
+                            animateCounter('statHealthIndex', parseFloat(ratio), 800, true);
+                            const phishRatio = ((data.phishing_count / data.total_scans) * 100).toFixed(1);
+                            const threatBar = document.getElementById('statThreatBar');
+                            const safeBar = document.getElementById('statSafeBar');
+                            const healthBar = document.getElementById('statHealthBar');
+                            if (threatBar) threatBar.style.width = phishRatio + '%';
+                            if (safeBar) safeBar.style.width = ratio + '%';
+                            if (healthBar) healthBar.style.width = ratio + '%';
+                        }
+                    }
+                }
+
+                if (data.scanner_state) {
+                    const radarText = document.getElementById('navRadarText');
+                    const radarBox = document.getElementById('navRadarBox');
+                    if (data.scanner_state.running) {
+                        radarText.innerText = `Radar: ${data.scanner_state.account || 'Active'}`;
+                    } else {
+                        radarText.innerText = data.scanner_state.account ? `Connected: ${data.scanner_state.account}` : 'Radar Ready';
+                    }
+                }
+            } catch (err) {
+                console.log("Live sync idle:", err);
+            }
+        }
+
+        setInterval(syncLiveFeed, 4000);
+
+        /* =========================================================
+           INSTANT "SCAN INBOX NOW" ACTION
+           ========================================================= */
+        const btnScanInbox = document.getElementById('btnScanInboxNow');
+        btnScanInbox.addEventListener('click', async () => {
+            const originalText = btnScanInbox.innerHTML;
+            btnScanInbox.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-1"></i> Scanning Inbox...';
+            btnScanInbox.disabled = true;
+
+            try {
+                const res = await fetch('/api/scanner/scan-now', { method: 'POST' });
+                const data = await res.json();
+                if (data.success) {
+                    showToast('Scan Completed', data.message, false);
+                    syncLiveFeed();
+                } else {
+                    showToast('Inbox Scan', data.error || 'Scan incomplete. Please check email connection in Settings.', true);
+                }
+            } catch (e) {
+                showToast('Scan Error', e.message, true);
+            } finally {
+                btnScanInbox.innerHTML = originalText;
+                btnScanInbox.disabled = false;
+            }
+        });
+
+        /* =========================================================
+           DEEP THREAT INSPECTION MODAL LOADER
+           ========================================================= */
+        const inspectModal = new bootstrap.Modal(document.getElementById('inspectModal'));
+
+        async function inspectRecord(recordId) {
+            document.getElementById('inspectLoading').classList.remove('d-none');
+            document.getElementById('inspectContent').classList.add('d-none');
+            inspectModal.show();
+
+            try {
+                const res = await fetch(`/api/record/${recordId}`);
+                const data = await res.json();
+                if (data.success && data.record) {
+                    const r = data.record;
+                    const isPhish = r.is_phishing || r.threat_score >= 50;
+
+                    document.getElementById('inspectSender').innerText = r.sender;
+                    document.getElementById('inspectSubject').innerText = r.subject;
+                    document.getElementById('inspectDate').innerText = r.scanned_at;
+                    document.getElementById('inspectScoreVal').innerText = r.threat_score + '%';
+
+                    const banner = document.getElementById('inspectScoreBanner');
+                    const badge = document.getElementById('inspectThreatBadge');
+                    const title = document.getElementById('inspectVerdictTitle');
+
+                    if (isPhish) {
+                        banner.style.background = 'linear-gradient(135deg, rgba(244, 63, 94, 0.35) 0%, rgba(190, 18, 60, 0.45) 100%)';
+                        banner.style.border = '1.5px solid rgba(244, 63, 94, 0.7)';
+                        badge.className = 'badge bg-danger fs-6 px-3 py-1 rounded-pill';
+                        badge.innerText = '🚨 PHISHING ATTACK';
+                        title.innerText = 'High Risk Phishing Threat';
+                    } else {
+                        banner.style.background = 'linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(5, 150, 105, 0.35) 100%)';
+                        banner.style.border = '1.5px solid rgba(16, 185, 129, 0.6)';
+                        badge.className = 'badge bg-success fs-6 px-3 py-1 rounded-pill';
+                        badge.innerText = '🛡️ CLEAN & VERIFIED';
+                        title.innerText = 'Legitimate Email';
+                    }
+
+                    const recList = document.getElementById('inspectRecommendationsList');
+                    recList.innerHTML = '';
+                    if (r.recommendations_list && r.recommendations_list.length > 0) {
+                        r.recommendations_list.forEach(item => {
+                            const li = document.createElement('li');
+                            li.className = 'mb-1 fw-medium';
+                            li.innerText = item;
+                            recList.appendChild(li);
+                        });
+                    } else {
+                        recList.innerHTML = '<li>Email passed heuristic security filters. No threats identified.</li>';
+                    }
+
+                    document.getElementById('inspectLoading').classList.add('d-none');
+                    document.getElementById('inspectContent').classList.remove('d-none');
+                }
+            } catch (e) {
+                document.getElementById('inspectLoading').innerHTML = `<span class="text-danger">Failed to load record: ${e.message}</span>`;
+            }
+        }
+
+        function copyInspectionReport() {
+            const sender = document.getElementById('inspectSender').innerText;
+            const subject = document.getElementById('inspectSubject').innerText;
+            const score = document.getElementById('inspectScoreVal').innerText;
+            const text = `[PhishShield AI Audit Report]\nThreat Score: ${score}\nSender: ${sender}\nSubject: ${subject}\nAnalyzed with fine-tuned BERT Transformer.`;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Audit summary copied to clipboard!');
+            });
+        }
+
+        /* =========================================================
+           MANUAL EMAIL SCANNER FORM
+           ========================================================= */
+        document.getElementById('manualScanForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btnManualSubmit');
+            const resBox = document.getElementById('manualResultBox');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-1"></i> Running Neural Scan...';
+            btn.disabled = true;
+
+            const payload = {
+                sender: document.getElementById('manualSender').value.trim(),
+                subject: document.getElementById('manualSubject').value.trim(),
+                email_text: document.getElementById('manualBody').value.trim()
+            };
+
+            try {
+                const res = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                resBox.classList.remove('d-none');
+
+                if (data.is_phishing) {
+                    playThreatAlarm();
+                    resBox.className = 'mt-3 p-3 rounded-4 alert alert-danger';
+                    resBox.innerHTML = `
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-danger fs-6 px-3 py-1 rounded-pill">🚨 PHISHING THREAT DETECTED</span>
+                            <span class="fw-bold font-mono fs-5 text-danger">Threat Score: ${data.threat_score}%</span>
+                        </div>
+                        <ul class="mb-0 small ps-3">
+                            ${(data.recommendations || []).map(r => `<li class="fw-medium">${r}</li>`).join('')}
+                        </ul>
+                    `;
+                    showToast(`🚨 High Risk Phishing: ${data.threat_score}%`, payload.subject, true);
+                } else {
+                    playSafeChime();
+                    resBox.className = 'mt-3 p-3 rounded-4 alert alert-success';
+                    resBox.innerHTML = `
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-success fs-6 px-3 py-1 rounded-pill">🛡️ VERIFIED SAFE EMAIL</span>
+                            <span class="fw-bold font-mono fs-5 text-success">Threat Score: ${data.threat_score}%</span>
+                        </div>
+                        <p class="mb-0 small mt-2 fw-medium">Passed deep learning inspection without suspicious indicators.</p>
+                    `;
+                    showToast('🛡️ Clean Email Verified', payload.subject, false);
+                }
+                syncLiveFeed();
+            } catch (err) {
+                resBox.classList.remove('d-none');
+                resBox.className = 'mt-3 p-3 rounded-4 alert alert-danger';
+                resBox.innerText = 'Analysis error: ' + err.message;
+            } finally {
+                btn.innerHTML = '<i class="fa-solid fa-brain me-1"></i> Analyze with BERT AI';
+                btn.disabled = false;
+            }
+        });
+
+        /* =========================================================
+           STANDALONE URL SCANNER SANDBOX
+           ========================================================= */
+        document.getElementById('urlScanForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btnUrlSubmit');
+            const resBox = document.getElementById('urlResultBox');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-1"></i> Inspecting...';
+            btn.disabled = true;
+
+            const url = document.getElementById('inputUrlTarget').value.trim();
+
+            try {
+                const res = await fetch('/api/analyze-url', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url: url })
+                });
+                const data = await res.json();
+                resBox.classList.remove('d-none');
+
+                if (data.success && data.result) {
+                    const r = data.result;
+                    if (r.is_malicious) {
+                        playThreatAlarm();
+                        resBox.className = 'mt-3 p-3 rounded-4 alert alert-danger';
+                        resBox.innerHTML = `
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-danger fs-6 px-3 py-1 rounded-pill">🚨 MALICIOUS URL DETECTED</span>
+                                <span class="fw-bold font-mono fs-5 text-danger">Risk Score: ${r.risk_score}%</span>
+                            </div>
+                            <div class="small"><strong>URL:</strong> <code>${r.url}</code></div>
+                            <div class="small mt-1"><strong>Triggered Red Flags:</strong> ${r.issues.join(', ') || 'High risk heuristics'}</div>
+                        `;
+                    } else {
+                        playSafeChime();
+                        resBox.className = 'mt-3 p-3 rounded-4 alert alert-success';
+                        resBox.innerHTML = `
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-success fs-6 px-3 py-1 rounded-pill">🛡️ CLEAN URL FORMAT</span>
+                                <span class="fw-bold font-mono fs-5 text-success">Risk Score: ${r.risk_score}%</span>
+                            </div>
+                            <div class="small mt-1 fw-medium">No IP address spoofing, known shorteners, or malicious TLDs detected.</div>
+                        `;
+                    }
+                }
+            } catch (err) {
+                resBox.classList.remove('d-none');
+                resBox.className = 'mt-3 p-3 rounded-4 alert alert-danger';
+                resBox.innerText = 'URL Inspection error: ' + err.message;
+            } finally {
+                btn.innerHTML = '<i class="fa-solid fa-shield-virus me-1"></i> Inspect URL';
+                btn.disabled = false;
+            }
+        });
+
+        /* =========================================================
+           SETTINGS MODAL & IMAP CONNECTOR
+           ========================================================= */
+        const connectForm = document.getElementById('connectEmailForm');
+        const alertBox = document.getElementById('connectAlertBox');
+        const connectBtn = document.getElementById('btnConnectEmail');
+        const togglePwdBtn = document.getElementById('btnTogglePwd');
+        const pwdInput = document.getElementById('inputAppPassword');
+
+        togglePwdBtn.addEventListener('click', () => {
+            if (pwdInput.type === 'password') {
+                pwdInput.type = 'text';
+                togglePwdBtn.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+            } else {
+                pwdInput.type = 'password';
+                togglePwdBtn.innerHTML = '<i class="fa-solid fa-eye"></i>';
+            }
+        });
+
+        connectForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            connectBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-1"></i> Testing Mailbox...';
+            connectBtn.disabled = true;
+            alertBox.classList.add('d-none');
+
+            const payload = {
+                email: document.getElementById('inputEmailAcc').value.trim(),
+                password: document.getElementById('inputAppPassword').value.trim(),
+                provider: document.getElementById('selectProvider').value
+            };
+
+            try {
+                const res = await fetch('/api/connect-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                alertBox.classList.remove('d-none');
+                if (data.success) {
+                    alertBox.className = 'alert alert-success rounded-3';
+                    alertBox.innerHTML = `<strong><i class="fa-solid fa-circle-check me-1"></i> Connected!</strong> ${data.message}`;
+                    startScannerAction();
+                } else {
+                    alertBox.className = 'alert alert-danger rounded-3';
+                    alertBox.innerHTML = `<strong><i class="fa-solid fa-triangle-exclamation me-1"></i> Connection Failed:</strong> ${data.error}`;
+                }
+            } catch (err) {
+                alertBox.classList.remove('d-none');
+                alertBox.className = 'alert alert-danger rounded-3';
+                alertBox.innerText = 'Connection error: ' + err.message;
+            } finally {
+                connectBtn.innerHTML = '<i class="fa-solid fa-plug me-1"></i> Save & Test Mailbox';
+                connectBtn.disabled = false;
+            }
+        });
+
+        async function startScannerAction() {
+            try {
+                const res = await fetch('/api/scanner/start', { method: 'POST' });
+                const data = await res.json();
+                if (data.success) {
+                    showToast('Auto-Scanner Started', 'Inbox is now monitored automatically every minute.', false);
+                }
+            } catch (e) {}
+        }
+
+        document.getElementById('btnStartScanner').addEventListener('click', startScannerAction);
+        document.getElementById('btnStopScanner').addEventListener('click', async () => {
+            try {
+                await fetch('/api/scanner/stop', { method: 'POST' });
+                showToast('Auto-Scanner Stopped', 'Automatic polling paused.', false);
+            } catch (e) {}
+        });
+
+        /* =========================================================
+           5-THEME LIQUID GLASS CONTROLLER & 3D TILT ENGINE
+           ========================================================= */
+        function setLiquidTheme(themeName) {
+            const body = document.body;
+            body.classList.remove('theme-dark', 'theme-light', 'theme-aqua', 'theme-cyber', 'theme-petal');
+            body.classList.add(`theme-${themeName}`);
+
+            if (themeName === 'light' || themeName === 'petal') {
+                document.documentElement.setAttribute('data-bs-theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-bs-theme', 'dark');
+            }
+
+            // Update palette bar pills
+            document.querySelectorAll('.palette-pill').forEach(pill => {
+                pill.classList.remove('active');
+            });
+            const activePill = document.getElementById(`pill-${themeName}`);
+            if (activePill) activePill.classList.add('active');
+
+            // Update navbar toggle button icon and label
+            const icon = document.getElementById('themeIcon');
+            const label = document.getElementById('themeLabel');
+            if (icon) icon.style.color = '';
+            if (themeName === 'petal') {
+                if (icon) { icon.className = 'fa-solid fa-spa me-1'; icon.style.color = '#c06c84'; }
+                if (label) label.innerText = 'Rose Meadow';
+            } else if (themeName === 'light') {
+                if (icon) icon.className = 'fa-solid fa-sun text-warning me-1';
+                if (label) label.innerText = 'Crystal Light';
+            } else if (themeName === 'aqua') {
+                if (icon) icon.className = 'fa-solid fa-water text-success me-1';
+                if (label) label.innerText = 'Oceanic Aqua';
+            } else if (themeName === 'cyber') {
+                if (icon) icon.className = 'fa-solid fa-bolt text-primary me-1';
+                if (label) label.innerText = 'Cyber Violet';
+            } else {
+                if (icon) icon.className = 'fa-solid fa-moon text-info me-1';
+                if (label) label.innerText = 'Liquid Dark';
+            }
+
+            localStorage.setItem('phishshield_theme', themeName);
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            if (body.classList.contains('theme-petal')) {
+                setLiquidTheme('dark');
+            } else if (body.classList.contains('theme-dark')) {
+                setLiquidTheme('light');
+            } else if (body.classList.contains('theme-light')) {
+                setLiquidTheme('aqua');
+            } else if (body.classList.contains('theme-aqua')) {
+                setLiquidTheme('cyber');
+            } else {
+                setLiquidTheme('petal');
+            }
+        }
+
+        // Initialize saved theme or default to Petalpay Rose Meadow as requested
+        const savedTheme = localStorage.getItem('phishshield_theme') || 'petal';
+        setLiquidTheme(savedTheme);
+
+        /* Dynamic 3D Card Tilt & Specular Light Following Engine */
+        document.querySelectorAll('.liquid-glass-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                card.style.setProperty('--mouse-x', `${x}%`);
+                card.style.setProperty('--mouse-y', `${y}%`);
+
+                // Interactive 3D Perspective Tilt (Gentle & Fluid)
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                const rotateX = ((centerY - e.clientY) / (rect.height / 2)) * 3.5;
+                const rotateY = ((e.clientX - centerX) / (rect.width / 2)) * 3.5;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-2px)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+
+        /* Dynamic Interactive Water Ripple on Screen Click */
+        document.addEventListener('click', (e) => {
+            // Ignore form typing inputs for clean UX
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+
+            const ripple = document.createElement('div');
+            ripple.className = 'liquid-water-ripple';
+            ripple.style.left = `${e.clientX}px`;
+            ripple.style.top = `${e.clientY}px`;
+            document.body.appendChild(ripple);
+            setTimeout(() => {
+                ripple.remove();
+            }, 750);
+        });
+
+        /* =========================================================
+           INITIAL LOAD ENTRANCE COUNT-UP & PROGRESS ANIMATION
+           ========================================================= */
+        window.addEventListener('DOMContentLoaded', () => {
+            const totalEl = document.getElementById('statTotalScans');
+            const threatEl = document.getElementById('statThreatCount');
+            const safeEl = document.getElementById('statSafeCount');
+            const healthEl = document.getElementById('statHealthIndex');
+
+            if (totalEl) {
+                const tot = parseInt(totalEl.innerText) || 0;
+                totalEl.innerText = '0';
+                setTimeout(() => animateCounter('statTotalScans', tot, 1200), 100);
+            }
+            if (threatEl) {
+                const thr = parseInt(threatEl.innerText) || 0;
+                threatEl.innerText = '0';
+                setTimeout(() => animateCounter('statThreatCount', thr, 1200), 180);
+            }
+            if (safeEl) {
+                const sf = parseInt(safeEl.innerText) || 0;
+                safeEl.innerText = '0';
+                setTimeout(() => animateCounter('statSafeCount', sf, 1200), 260);
+            }
+            if (healthEl) {
+                const hl = parseFloat(healthEl.innerText) || 100;
+                healthEl.innerText = '0%';
+                setTimeout(() => animateCounter('statHealthIndex', hl, 1400, true), 340);
+            }
+
+            // Animate initial progress bar fill
+            const threatBar = document.getElementById('statThreatBar');
+            const safeBar = document.getElementById('statSafeBar');
+            const healthBar = document.getElementById('statHealthBar');
+            if (threatBar) {
+                const w = parseFloat(threatBar.style.width) || 0;
+                animateProgressBar('statThreatBar', w, 1100);
+            }
+            if (safeBar) {
+                const w = parseFloat(safeBar.style.width) || 100;
+                animateProgressBar('statSafeBar', w, 1100);
+            }
+            if (healthBar) {
+                const w = parseFloat(healthBar.style.width) || 100;
+                animateProgressBar('statHealthBar', w, 1200);
+            }
+        });
+    </script>
+</body>
+</html>

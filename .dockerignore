@@ -1,0 +1,15 @@
+__pycache__
+*.py[cod]
+*$py.class
+venv/
+env/
+ENV/
+.env
+.git
+.gitignore
+.gitattributes
+.vscode/
+.idea/
+instance/*.db
+*.log
+demo/*.mp4
